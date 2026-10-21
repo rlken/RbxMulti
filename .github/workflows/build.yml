@@ -1,0 +1,51 @@
+name: Build and test
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: macos-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Session preparation and log parsing tests
+        run: bash Tests/run.sh
+      - name: Build universal launcher
+        run: bash build.sh
+      - name: Verify package and write checksum
+        run: |
+          codesign --verify --deep --strict build/RbxMulti.app
+          lipo -archs build/RbxMulti.app/Contents/MacOS/RbxMulti
+          cd build
+          shasum -a 256 RbxMulti.zip > SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RbxMulti
+          path: |
+            build/RbxMulti.zip
+            build/SHA256SUMS.txt
+          if-no-files-found: error
+  release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: RbxMulti
+          path: release
+      - uses: softprops/action-gh-release@v2
+        with:
+          prerelease: true
+          body_path: docs/RELEASE-1.2.md
+          files: |
+            release/RbxMulti.zip
+            release/SHA256SUMS.txt

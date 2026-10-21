@@ -1,0 +1,22 @@
+# Generated binaries and local visual reviews
+/build/
+/.impeccable/
+.DS_Store
+*.app/
+*.zip
+*.dSYM/
+
+# Credentials and runtime data must never be published
+.env
+.env.*
+*.pem
+*.p12
+*.pfx
+*.key
+*.keychain*
+identity.plist
+*.log
+
+# One-off local maintenance tools, not portable project tests
+/Tests/PrepareInstalledPlayer.swift
+/Tests/RestoreSigningExperiment.swift

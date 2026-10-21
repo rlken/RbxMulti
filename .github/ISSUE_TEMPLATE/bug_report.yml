@@ -1,0 +1,56 @@
+name: Bug report
+description: Report a reproducible RbxMulti problem without sharing credentials
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Read the README limitations and troubleshooting guide first.
+        Never post cookies, authentication tickets, complete launch URLs, passwords, Keychain exports, or raw Roblox logs.
+        For a suspected security issue, omit exploit details and sensitive data from public reports.
+  - type: input
+    id: version
+    attributes:
+      label: RbxMulti version and install source
+      placeholder: "1.2, GitHub release or local build"
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: macOS version and chip
+      placeholder: "macOS version, Apple silicon or Intel"
+    validations:
+      required: true
+  - type: input
+    id: roblox
+    attributes:
+      label: Roblox version and number of players
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include whether ordinary single-account Roblox works, and whether an update or rejoin preceded the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Expected result and actual result
+      description: Include the exact error code and approximate event time/timezone if relevant. Do not include private-server links.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized Activity events or cropped screenshots
+      description: Review every line/image for credentials and unrelated personal data. Do not attach full Roblox logs.
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Before submitting
+      options:
+        - label: I reviewed the known limitations and removed credentials, launch tickets, and other private data.
+          required: true

@@ -1,0 +1,13 @@
+[req]
+distinguished_name = name
+x509_extensions = extensions
+prompt = no
+
+[name]
+CN = RbxMulti Local Session Signing
+
+[extensions]
+basicConstraints = critical,CA:false
+keyUsage = critical,digitalSignature
+extendedKeyUsage = critical,codeSigning
+subjectKeyIdentifier = hash
