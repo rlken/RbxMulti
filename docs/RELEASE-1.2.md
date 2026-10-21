@@ -1,26 +1,26 @@
-# RbxMulti 1.2 — public preview
+Run multiple Roblox accounts on macOS from a lightweight menu-bar manager.
 
-Native macOS multi-instance Roblox launcher. Requires macOS 13+; universal Apple silicon / Intel launcher.
+**Requires macOS 13+ and the official Roblox app. Supports Apple silicon and Intel.**
 
-## Download and start
+## What's included
 
-Download RbxMulti.zip and SHA256SUMS.txt from this release, compare the archive checksum, unzip, and move RbxMulti.app into Applications. Open the manager once, then sign in to an account on roblox.com and press Play. Switch accounts in the browser to open additional players.
+- Separate player instances with account names and avatars when available.
+- Refreshed Accounts and Activity views with clearer session warnings.
+- Background operation: Play links no longer open the manager window.
+- Optional Keep Mac awake and individual player controls.
 
-The app is ad-hoc signed and not Apple-notarized. Review the README's installation and trust guidance before approving any macOS prompt.
+## Install or update
 
-## Included
+Download **RbxMulti.zip**, unzip it, and move **RbxMulti.app** into Applications. Open it once, then sign in on roblox.com and press Play. Switch accounts in the browser to open additional players.
 
-- Per-slot private player copies and account identity/ avatar lookup.
-- Redesigned Accounts and Activity views with clearer status and warnings.
-- Menu-bar operation: Play links stay in the background; Hide/close keeps the manager running.
-- Preserved existing player processes when opening or quitting the manager.
-- Session preparation, identity parsing, window policy, and real Launch Services test fixtures.
-- Detailed setup, privacy, troubleshooting, build, and contributor documentation.
+For updates, quit the manager before replacing it. There is no automatic updater. **SHA256SUMS.txt** is included for download verification.
 
-## Important limits
+The app is ad-hoc signed and **not Apple-notarized**. See the [installation guide](https://github.com/rlken/RbxMulti#install) before approving macOS prompts.
 
-This is a public preview, not a guaranteed AFK solution. Multi-account teleport/rejoin and repeated Keychain prompts remain unresolved. No 19-minute rejoin timer, input simulation, or auto-clicking is implemented. Player running describes a process, not a verified game connection. Roblox updates can reset a private copy's identity.
+## Known limitations
 
-There is no automatic updater: quit only the manager, replace its app, and reopen it. Existing running players do not automatically gain updated isolation behavior.
+Multi-account rejoin/idle disconnections and repeated Keychain prompts remain unresolved. This is not an anti-idle tool. “Player running” does not confirm an active game connection, and Roblox updates can require a player relaunch.
 
-Read the repository README and docs before use. This is unofficial and not affiliated with Roblox. The repository is public but has no open-source license at this time.
+[User guide](https://github.com/rlken/RbxMulti/blob/main/docs/USAGE.md) · [Troubleshooting](https://github.com/rlken/RbxMulti/blob/main/docs/TROUBLESHOOTING.md)
+
+Unofficial; not affiliated with Roblox. No open-source license has been granted.

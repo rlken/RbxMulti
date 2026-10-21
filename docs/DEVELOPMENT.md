@@ -83,19 +83,14 @@ Report live results separately from unit/build results. Unknown or untested outc
 
 ## GitHub Actions and releases
 
-The workflow runs session tests and builds on pushes to main, pull requests, and manual dispatch. It uploads the archive and a SHA-256 checksum as a workflow artifact. A `v*` tag also publishes a **prerelease**, reflecting the unresolved compatibility limitations.
+The workflow runs session tests and builds on pushes to main, pull requests, and manual dispatch. It uploads the archive and a SHA-256 checksum as a workflow artifact. A `v*` tag initially publishes a **prerelease** for review. After checking the assets and release notes, the maintainer can promote it to a regular release and mark it Latest. Version 1.2 is published this way; its documented limitations still apply.
 
 Before tagging:
 
 1. Review the source and staged file list for credentials, account data, runtime copies, and logs.
-2. Update both version fields in `Info.plist`, README, and CHANGELOG as appropriate.
+2. Update both version fields in `Info.plist`, README, and CHANGELOG as appropriate. Add the version's release notes and update the workflow's `body_path` to match.
 3. Run the test suites and build. Record the limitations and live tests actually performed.
 4. Commit and push the reviewed changes.
-5. Create a matching tag (for the current version, `v1.2`) and push it:
-
-   ```sh
-   git tag -a v1.2 -m "RbxMulti 1.2"
-   git push origin v1.2
-   ```
+5. Create an annotated tag matching the new version and push that tag. `v1.2` is already published; do not reuse it.
 
 Do not reuse or move an already published tag. Inspect Actions and the resulting release assets before telling users the download is ready. CI does not install or update any user's app automatically.
