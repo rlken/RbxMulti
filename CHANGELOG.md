@@ -2,6 +2,12 @@
 
 This is a feature history, not a claim that every earlier version had a public GitHub release.
 
+## Unreleased
+
+- Remove unused player-closing and URL-delivery helpers, redundant identity data, and inactive reconnect state.
+- Clarify closed-player retention comments and shorten internal design notes.
+- Add regression checks for duplicate process tracking and running-player counts.
+
 ## 1.2
 
 - Refreshed native account list, larger avatar presentation, clearer warnings, Add account guidance, and a separate Activity tab.

@@ -21,6 +21,17 @@ struct WindowBehaviorTests {
 
         let app = NSApplication.shared
         app.setActivationPolicy(.accessory)
+        let tracking = Model(startServices: false)
+        let started = Date(timeIntervalSince1970: 1_000)
+        tracking.track(pid: 101, started: started)
+        tracking.track(pid: 101, started: started.addingTimeInterval(10))
+        tracking.track(pid: 102, started: started)
+        precondition(tracking.items.count == 2, "Repeated discovery must not duplicate a player")
+        precondition(tracking.items.map(\.name) == ["Account 1", "Account 2"])
+        precondition(tracking.items[0].started == started)
+        precondition(tracking.runningCount == 2)
+        tracking.items[0].running = false
+        precondition(tracking.runningCount == 1, "Closed rows must not count as running")
         let fake = Model(startServices: false)
         var handled = 0
         let delegate = AppDelegate(model: fake, managesServices: false) { _ in handled += 1 }

@@ -1,6 +1,6 @@
 # RbxMulti native interface
 
-The interface is a quiet macOS utility: account identity and process status come first, with diagnostic activity on a separate tab. The UI/UX Pro Max and Impeccable refinement pass preserves native controls and restrained purple accents.
+Use native macOS controls, system typography, and a purple accent. Keep account identity and process status in Accounts, with diagnostic events in Activity.
 
 ## Visual rules
 
@@ -20,4 +20,4 @@ The interface is a quiet macOS utility: account identity and process status come
 
 ## Verification
 
-Window-policy and actual macOS URL-delivery fixtures cover manual open, cold/warm links, close-to-background, and explicit reopening. Native render fixtures cover dark, compact light, and empty states; a live installed-app inspection covers real names and avatars. Web-only design detectors do not apply to these SwiftUI/AppKit views.
+Use the window and URL-delivery tests for lifecycle changes. Render fixtures cover dark, compact light, and empty states; check real names and avatars separately in the installed app.

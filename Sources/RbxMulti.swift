@@ -18,13 +18,11 @@ struct Instance: Identifiable {
     var pid: pid_t
     let started: Date
     var userID: Int? = nil
-    var username: String? = nil
     var avatarURL: URL? = nil
     var accountCollision = false
     var isolationLost = false
     var running = true
     var stoppedAt: Date? = nil
-    var awaitingSince: Date? = nil
 }
 
 private struct RobloxThumbnailResponse: Decodable {
@@ -59,26 +57,18 @@ final class Model: ObservableObject {
         }
     }
     private var counter = 0
-    private var retired = Set<pid_t>()
     private var caffeinate: Process?
     private var lastIdentityScan: Date = .distantPast
     private var identityScanInProgress = false
     private var preparingSlots = Set<String>()
     private let preparationQueue = DispatchQueue(label: "com.rbxmulti.prepare", qos: .userInitiated)
-    // Roblox may take a little while to close the old player and start the
-    // replacement player during an in-game reconnect. Keep the account slot
-    // available long enough to attach that replacement instead of showing it
-    // as a new, unrelated account.
-    private let reconnectWindow: TimeInterval = 90
+    private let closedPlayerRetention: TimeInterval = 90
 
     init(startServices: Bool = true) {
         servicesEnabled = startServices
         guard startServices else { return }
         keepMacAwake = UserDefaults.standard.object(forKey: "keepMacAwake") as? Bool ?? true
-        // Background Roblox windows can be put into App Nap by macOS. That
-        // prevents their game code from reliably running timers (including a
-        // game's own, legitimate reconnect/teleport logic). This preference
-        // takes effect for players launched after it is set.
+        // Request App Nap opt-out for future player launches.
         UserDefaults(suiteName: robloxID)?.set(true, forKey: "NSAppSleepDisabled")
         updateWakeLock()
         Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] _ in
@@ -91,9 +81,7 @@ final class Model: ObservableObject {
             guard caffeinate?.isRunning != true else { return }
             let p = Process()
             p.executableURL = URL(fileURLWithPath: "/usr/bin/caffeinate")
-            // Tie the power assertion to RbxMulti itself. It prevents idle
-            // display/system sleep only while the launcher is open; it does
-            // not send input to Roblox or interact with the game windows.
+            // End the sleep assertion when the manager exits.
             p.arguments = ["-d", "-i", "-s", "-w", "\(getpid())"]
             p.standardOutput = FileHandle.nullDevice
             p.standardError = FileHandle.nullDevice
@@ -116,7 +104,6 @@ final class Model: ObservableObject {
         caffeinate = nil
     }
 
-
     var runningCount: Int { items.filter { $0.running }.count }
 
     func note(_ s: String) {
@@ -132,35 +119,10 @@ final class Model: ObservableObject {
         return NSWorkspace.shared.urlForApplication(withBundleIdentifier: robloxID)
     }
 
-    // Legacy force-close helper. Not called by the current startup lifecycle.
-    func closeRoblox() {
-        let had = !robloxApps().isEmpty
-        robloxApps().forEach { $0.forceTerminate() }
-        let p = Process()
-        p.executableURL = URL(fileURLWithPath: "/usr/bin/pkill")
-        p.arguments = ["-9", "-x", "RobloxPlayer"]
-        try? p.run()
-        p.waitUntilExit()
-        for _ in 0..<30 {
-            if robloxApps().isEmpty { break }
-            usleep(100_000)
-        }
-        items.removeAll()
-        retired.removeAll()
-        if !robloxApps().isEmpty {
-            message = "Could not close Roblox. Quit it manually."
-            note("Startup: could not close Roblox")
-        } else if had {
-            message = "Roblox was closed before starting."
-            note("Startup: closed running Roblox")
-        }
-    }
-
-    func track(pid: pid_t, started: Date, awaiting: Bool = false) {
+    func track(pid: pid_t, started: Date) {
         guard !items.contains(where: { $0.pid == pid }) else { return }
         counter += 1
-        items.append(Instance(name: "Account \(counter)", pid: pid, started: started,
-                              awaitingSince: awaiting ? Date() : nil))
+        items.append(Instance(name: "Account \(counter)", pid: pid, started: started))
     }
 
     func add(_ app: NSRunningApplication) {
@@ -235,21 +197,6 @@ final class Model: ObservableObject {
         }
     }
 
-    // Sends the roblox-player link to ONE specific process (an Apple 'open URL' event)
-    static func sendURL(_ url: URL, to pid: pid_t) -> Bool {
-        let target = NSAppleEventDescriptor(processIdentifier: pid)
-        let event = NSAppleEventDescriptor(eventClass: 0x4755524C, eventID: 0x4755524C,
-                                           targetDescriptor: target,
-                                           returnID: -1, transactionID: 0)
-        event.setParam(NSAppleEventDescriptor(string: url.absoluteString), forKeyword: 0x2D2D2D2D)
-        do {
-            _ = try event.sendEvent(options: [.noReply], timeout: 10)
-            return true
-        } catch {
-            return false
-        }
-    }
-
     func claimLinks() {
         for s in schemes {
             NSWorkspace.shared.setDefaultApplication(at: Bundle.main.bundleURL,
@@ -313,7 +260,6 @@ final class Model: ObservableObject {
                   let profile = try? JSONDecoder().decode(RobloxUserProfile.self, from: data) else { return }
             DispatchQueue.main.async {
                 guard let index = self.items.firstIndex(where: { $0.id == instanceID }) else { return }
-                self.items[index].username = profile.name
                 self.items[index].name = profile.name
             }
         }.resume()
@@ -333,10 +279,7 @@ final class Model: ObservableObject {
         }.resume()
     }
 
-    // Some Roblox launches do not write an identity to the local log until a
-    // later teleport. The editable account name doubles as a privacy-safe
-    // fallback: entering a public username lets us resolve only that public
-    // profile ID and its public headshot—never a browser cookie or token.
+    // Public username lookup is the fallback when join logs lack an identity.
     func resolveUsername(for instanceID: UUID, username: String) {
         let cleaned = username.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !cleaned.isEmpty, !cleaned.hasPrefix("Account "),
@@ -352,7 +295,6 @@ final class Model: ObservableObject {
             DispatchQueue.main.async {
                 guard let index = self.items.firstIndex(where: { $0.id == instanceID }) else { return }
                 self.items[index].userID = user.id
-                self.items[index].username = user.name
                 self.items[index].name = user.name
                 self.fetchAvatar(for: instanceID, userID: user.id)
             }
@@ -362,13 +304,8 @@ final class Model: ObservableObject {
     func refresh() {
         let apps = robloxApps()
         let live = Set(apps.map { $0.processIdentifier })
-        retired.formIntersection(live)
         for i in items.indices {
-            // This PID is the player we launched, so it is no longer waiting
-            // for its startup/restart process. Leaving this set made a later
-            // AFK reconnect get attached to an arbitrary older account.
             if live.contains(items[i].pid) {
-                items[i].awaitingSince = nil
                 if let app = apps.first(where: { $0.processIdentifier == items[i].pid }),
                    let url = app.bundleURL, let expectedID = IsolatedPlayer.slotID(at: url) {
                     let lost = app.bundleIdentifier != expectedID
@@ -378,11 +315,8 @@ final class Model: ObservableObject {
                     }
                     items[i].isolationLost = lost
                 }
-            } else if let t = items[i].awaitingSince, Date().timeIntervalSince(t) > reconnectWindow {
-                items[i].awaitingSince = nil
             }
-            // An account waiting for its restart still counts as running.
-            let now = live.contains(items[i].pid) || items[i].awaitingSince != nil
+            let now = live.contains(items[i].pid)
             if items[i].running && !now {
                 items[i].stoppedAt = Date()
                 note("\(items[i].name) (process \(items[i].pid)) stopped")
@@ -393,16 +327,15 @@ final class Model: ObservableObject {
         // that a new process belongs to an older account.
         for app in apps {
             let pid = app.processIdentifier
-            if retired.contains(pid) || items.contains(where: { $0.pid == pid }) { continue }
+            if items.contains(where: { $0.pid == pid }) { continue }
             add(app)
             note("Found Roblox process \(pid)")
         }
         scanAccountIdentities()
-        // Keep a stopped row just long enough to attach a legitimate Roblox
-        // reconnect. After that it is no longer useful in the status list.
+        // Briefly retain closed rows so their status can be seen before removal.
         items.removeAll {
             guard !$0.running, let stoppedAt = $0.stoppedAt else { return false }
-            return Date().timeIntervalSince(stoppedAt) > reconnectWindow
+            return Date().timeIntervalSince(stoppedAt) > closedPlayerRetention
         }
         let h = NSWorkspace.shared.urlForApplication(toOpen: URL(string: "roblox-player://x")!)
         handlerOK = h?.standardizedFileURL == Bundle.main.bundleURL.standardizedFileURL
