@@ -19,7 +19,9 @@ The app is ad-hoc signed and **not Apple-notarized**. See the [installation guid
 
 ## Known limitations
 
-Multi-account rejoin/idle disconnections and repeated Keychain prompts remain unresolved. This is not an anti-idle tool. “Player running” does not confirm an active game connection, and Roblox updates can require a player relaunch.
+Repeated Keychain prompts remain unresolved. This is not an anti-idle tool. “Player running” does not confirm an active game connection, and Roblox updates can require a player relaunch.
+
+Rejoin status updated October 22, 2026: the maintainer reports no recurrence in recent use, so it is no longer listed as a current known issue.
 
 [User guide](https://github.com/rlken/RbxMulti/blob/main/docs/USAGE.md) · [Troubleshooting](https://github.com/rlken/RbxMulti/blob/main/docs/TROUBLESHOOTING.md)
 

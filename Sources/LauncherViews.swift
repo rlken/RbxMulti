@@ -244,9 +244,16 @@ struct ContentView: View {
                 } label: { Image(systemName: "gearshape").frame(width: 28, height: 28) }
                     .menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize().accessibilityLabel("Launcher settings")
             }
-            HStack(alignment: .top, spacing: 6) {
+            HStack(spacing: 6) {
                 Image(systemName: "menubar.rectangle").accessibilityHidden(true)
                 Text("Closing this window keeps RbxMulti in the menu bar.")
+                Spacer(minLength: 12)
+                Link(destination: URL(string: "https://github.com/rlken")!) {
+                    Label("GitHub", systemImage: "arrow.up.right")
+                }
+                .buttonStyle(.bordered).controlSize(.small)
+                .help("Open rlken's GitHub profile")
+                .accessibilityLabel("Open rlken's GitHub profile")
             }.font(.system(size: 11)).foregroundStyle(LauncherStyle.secondaryText)
             if !model.message.isEmpty {
                 Text(model.message).font(.system(size: 12)).foregroundStyle(LauncherStyle.secondaryText)

@@ -20,9 +20,11 @@ If it repeats, report whether there was a Roblox update, whether the affected ro
 
 ## Error 278: idle for 20 minutes
 
+The previously reported multi-account rejoin problem has not recurred in the maintainer's recent use as of October 22, 2026. The guidance below remains available if a timeout occurs again.
+
 RbxMulti does not reset Roblox's idle timer. Keep Mac awake only affects macOS sleep. A game may provide pre-timeout teleporting, but the launcher does not guarantee that this works across all clients.
 
-Distinguish a game never initiating its rejoin from a rejoin starting and failing. Note which accounts rejoin, whether a warning appears, and the approximate event time/timezone. A late log collection time is not the rejoin time. There is no hidden 19-minute auto-rejoin option in version 1.2.
+Distinguish a game never initiating its rejoin from a rejoin starting and failing. Note which accounts rejoin, whether a warning appears, and the approximate event time/timezone. A late log collection time is not the rejoin time. There is no 19-minute auto-rejoin option.
 
 ## Error 276: same account launched elsewhere
 

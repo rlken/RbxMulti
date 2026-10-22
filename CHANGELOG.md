@@ -2,8 +2,10 @@
 
 This is a feature history, not a claim that every earlier version had a public GitHub release.
 
-## Unreleased
+## 1.2.1
 
+- Add a small footer button linking to the maintainer's GitHub profile.
+- Remove rejoin failures from the current known-issues list: the maintainer reports no recurrence in recent use as of October 22, 2026. This is a status update, not a new rejoin implementation.
 - Remove unused player-closing and URL-delivery helpers, redundant identity data, and inactive reconnect state.
 - Clarify closed-player retention comments and shorten internal design notes.
 - Add regression checks for duplicate process tracking and running-player counts.
@@ -17,7 +19,7 @@ This is a feature history, not a claim that every earlier version had a public G
 - Added window-policy, real Launch Services delivery, and synthetic visual-render fixtures.
 - Public documentation covering setup, limitations, privacy, troubleshooting, development, and signing research.
 
-Known issues remain: multi-account rejoin/idle disconnections, repeated Keychain prompts, and incomplete identity/avatar detection. This version does not introduce an automatic rejoin timer.
+Remaining known issues: repeated Keychain prompts and incomplete identity/avatar detection. This version does not introduce an automatic rejoin timer. See 1.2.1 for the updated rejoin status.
 
 ## 1.1.1
 

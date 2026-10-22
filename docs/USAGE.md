@@ -43,6 +43,7 @@ The launcher is macOS-only. The universal binary supports Apple silicon and Inte
 - Show accounts or manually opening RbxMulti restores its window. Receiving a Play link hides it again.
 - Quit RbxMulti stops the manager and its keep-awake assertion, without deliberately closing players. It does not restore Roblox's URL handlers; another Play link can restart the manager.
 - No login item is installed. RbxMulti does not automatically start when you log in to macOS.
+- The small GitHub button in the footer opens [rlken's profile](https://github.com/rlken) in your default browser.
 
 **Keep Mac awake** defaults to on and is saved between launches. It prevents idle display/system sleep through `caffeinate`. It does not send game input, reset Roblox's idle timer, or guarantee operation with a closed lid, after manual sleep, or through a network interruption. Expect higher battery and power use.
 

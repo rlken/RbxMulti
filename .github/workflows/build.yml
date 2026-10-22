@@ -45,7 +45,7 @@ jobs:
       - uses: softprops/action-gh-release@v2
         with:
           prerelease: true
-          body_path: docs/RELEASE-1.2.md
+          body_path: docs/RELEASE-1.2.1.md
           files: |
             release/RbxMulti.zip
             release/SHA256SUMS.txt

@@ -1,6 +1,6 @@
 # Privacy, permissions, and local changes
 
-This describes the code in version 1.2, not Roblox's own data practices or a guarantee about future builds.
+This describes the code in version 1.2.1, not Roblox's own data practices or a guarantee about future builds.
 
 ## Data flow
 
@@ -8,6 +8,7 @@ This describes the code in version 1.2, not Roblox's own data practices or a gua
 - RbxMulti enumerates local Roblox processes. It uses `lsof` to associate open player log files with their process IDs and reads those files locally to extract numeric user IDs from join telemetry. It does not upload the log contents.
 - It requests public profile names from `users.roblox.com` and headshot URLs from `thumbnails.roblox.com`, then loads the returned image. Manual username lookup sends the entered username to Roblox. These network services receive normal connection metadata, including the originating IP address.
 - The source contains no analytics/crash-reporting backend for RbxMulti. Roblox and the browser have their own network behavior, outside this utility's control.
+- Clicking the footer's GitHub button opens the maintainer's public profile in your default browser. The app does not contact GitHub automatically.
 - Account names, detected IDs, avatar URLs, and the last 30 Activity events are held in memory. Keep Mac awake and native window placement are persisted in preferences. The launcher is not a password manager.
 
 ## Changes made during normal use

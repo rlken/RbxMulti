@@ -2,9 +2,9 @@
 
 Run multiple Roblox accounts on one Mac with a native menu-bar launcher.
 
-**Version 1.2 · macOS 13+ · Apple silicon and Intel**
+**Version 1.2.1 · macOS 13+ · Apple silicon and Intel**
 
-[Download v1.2](https://github.com/rlken/RbxMulti/releases/tag/v1.2) · [User guide](docs/USAGE.md) · [Troubleshooting](docs/TROUBLESHOOTING.md) · [Report a bug](https://github.com/rlken/RbxMulti/issues/new/choose)
+[Download](https://github.com/rlken/RbxMulti/releases/latest) · [User guide](docs/USAGE.md) · [Troubleshooting](docs/TROUBLESHOOTING.md) · [Report a bug](https://github.com/rlken/RbxMulti/issues/new/choose)
 
 ## Features
 
@@ -18,7 +18,7 @@ Run multiple Roblox accounts on one Mac with a native menu-bar launcher.
 
 Requires macOS 13 or later and the official Roblox app, preferably installed at `/Applications/Roblox.app`. Roblox must work normally on your Mac first. Each extra player uses additional memory and storage; Roblox is not included in the download.
 
-1. Download **RbxMulti.zip** from the [release page](https://github.com/rlken/RbxMulti/releases/tag/v1.2).
+1. Download **RbxMulti.zip** from the [release page](https://github.com/rlken/RbxMulti/releases/latest).
 2. Unzip it and move **RbxMulti.app** into Applications. Keep only one installed copy.
 3. Open RbxMulti once and confirm any expected link-opening prompts.
 4. Check that the manager says **Play links ready**.
@@ -43,7 +43,7 @@ To reopen the manager, use its stacked-windows menu-bar icon → **Show accounts
 
 ## Important limitations
 
-- **AFK/rejoin is not guaranteed.** Multi-account rejoin failures and idle disconnections remain unresolved. There is no anti-idle input or automatic rejoin timer.
+- **No anti-idle automation.** Rejoining is handled by the game; RbxMulti does not simulate input or run an automatic rejoin timer.
 - **Keychain prompts may repeat**, including after “Always Allow.” The experimental signing option is not a fix and is disabled by default.
 - **Player running means the process exists**, not that it is connected to a game. A disconnected player remains listed until its process closes.
 - **Roblox updates can reset session isolation.** Relaunch an affected player when the manager warns you.
