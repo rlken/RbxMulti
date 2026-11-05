@@ -8,8 +8,8 @@
   <key>CFBundleIconFile</key><string>AppIcon</string>
   <key>CFBundleExecutable</key><string>RbxMulti</string>
   <key>CFBundlePackageType</key><string>APPL</string>
-  <key>CFBundleShortVersionString</key><string>1.2.2-beta.4</string>
-  <key>CFBundleVersion</key><string>10</string>
+  <key>CFBundleShortVersionString</key><string>1.2.2</string>
+  <key>CFBundleVersion</key><string>11</string>
   <key>LSUIElement</key><true/>
   <key>NSAppleEventsUsageDescription</key><string>RbxMulti sends each Roblox link to its own Roblox window.</string>
   <key>LSMinimumSystemVersion</key><string>13.0</string>
