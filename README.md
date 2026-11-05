@@ -6,6 +6,8 @@ Run multiple Roblox accounts on one Mac with a native menu-bar launcher.
 
 **Preview available: [1.2.2-beta.4](https://github.com/rlken/RbxMulti/releases/tag/v1.2.2-beta.4)** connects browser Play to official-signature player launches. Automatic rejoining and complete account isolation remain unverified. Read the [preview notes](docs/RELEASE-1.2.2-beta.4.md) before installing.
 
+**Preview setup:** If macOS shows the expected Roblox Studio-sharing Keychain request, enter your login Keychain password only in that system dialog and select **Always Allow**. The maintainer reports that approval now persists across launches. See the [exact changes and remaining limits](docs/RELEASE-1.2.2-beta.4.md#what-changed).
+
 [Download](https://github.com/rlken/RbxMulti/releases/latest) · [User guide](docs/USAGE.md) · [Troubleshooting](docs/TROUBLESHOOTING.md) · [Report a bug](https://github.com/rlken/RbxMulti/issues/new/choose)
 
 ## Features
