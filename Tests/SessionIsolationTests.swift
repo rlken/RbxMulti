@@ -3,6 +3,17 @@ import Foundation
 @main
 struct SessionIsolationTests {
     static func main() throws {
+        let defaultChannel = try PlayerVersionCheck.channel(for: URL(string: "roblox-player:1+channel:")!)
+        let customChannel = try PlayerVersionCheck.channel(for: URL(string: "roblox-player:1+channel:production-test")!)
+        precondition(defaultChannel == "LIVE" && customChannel == "production-test")
+        do {
+            _ = try PlayerVersionCheck.channel(for: URL(string: "roblox-player:1+channel:../bad")!)
+            preconditionFailure("Reject non-channel URL content")
+        } catch PlayerVersionCheck.Failure.invalidChannel { }
+        do {
+            _ = try PlayerVersionCheck.version(from: Data("{\"version\":\"invalid\"}".utf8))
+            preconditionFailure("Reject invalid version response")
+        } catch PlayerVersionCheck.Failure.unavailable { }
         let joinA = "2026-10-15T01:43:04Z,1,6 [FLog::GameJoinLoadTime] Report game_join_loadtime: placeid:1, userid:101, universeid:2,"
         let joinB = "2026-10-15T02:15:44Z,2,6 [FLog::GameJoinLoadTime] Report game_join_loadtime: universeid:2, userid:202,"
         let collision = PlayerSessionLog.identity(in: joinA + "\n" + joinB)!
@@ -69,6 +80,20 @@ struct SessionIsolationTests {
         let rebuilt = try IsolatedPlayer.prepare(source: source, slot: 1, directory: root)
         let updated = try PropertyListSerialization.propertyList(from: Data(contentsOf: rebuilt.url.appendingPathComponent("Contents/Info.plist")), format: nil) as! [String: Any]
         precondition(updated["CFBundleVersion"] as? String == "2")
+        // Synthetic fixture verification is injected only here; production
+        // requires Roblox's Apple-issued signature, never a bare identifier.
+        let archive = try IsolatedPlayer.preserveOfficialSource(source, directory: root, verify: {
+            IsolatedPlayer.metadata(at: $0)?["CFBundleIdentifier"] as? String == "com.roblox.RobloxPlayer"
+        })
+        _ = try IsolatedPlayer.prepare(source: archive, slot: 4, directory: root)
+        _ = try IsolatedPlayer.prepare(source: archive, slot: 5, directory: root)
+        precondition(IsolatedPlayer.metadata(at: archive)?["CFBundleIdentifier"] as? String == "com.roblox.RobloxPlayer",
+                     "Preparing multiple slots must preserve the vendor source identity")
+        precondition(!IsolatedPlayer.isOfficial(archive), "Synthetic cache must not pass vendor verification")
+        do {
+            _ = try IsolatedPlayer.preserveOfficialSource(source, directory: root)
+            preconditionFailure("Do not archive an unverified source")
+        } catch IsolatedPlayer.Failure.invalidSource { }
         do {
             _ = try IsolatedPlayer.SigningIdentity(certificateSHA1: "not a certificate")
             preconditionFailure("Malformed certificate pins must be rejected")

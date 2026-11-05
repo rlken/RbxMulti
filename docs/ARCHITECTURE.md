@@ -1,3 +1,5 @@
+> Beta 4 changes the launch architecture: see [current preview behavior and limits](RELEASE-1.2.2-beta.4.md). The description below includes the older stable implementation.
+
 # Architecture
 
 RbxMulti is a native SwiftUI/AppKit application, not a port of a Windows mutex utility. It has no package-manager dependencies or bundled Roblox binaries.
@@ -19,7 +21,7 @@ RbxMulti is a native SwiftUI/AppKit application, not a port of a Windows mutex u
 2. The model checks live players and in-flight preparations. Occupancy includes both bundle identifiers and slot paths, because an update can reset the bundle identifier.
 3. A serial worker queue chooses a source and prepares a free slot. The installed official app is the starting source; newer eligible cached sources are considered with signature checks.
 4. Preparation stages a separate copy, updates metadata, removes its URL scheme registrations, signs it, and verifies it before replacing an idle slot. APFS copy-on-write is attempted, with ordinary copying as a fallback.
-5. Before launch, the model checks occupancy again. It requests a new instance of the exact prepared application and passes the URL as `-protocolString`.
+5. Before launch, the model checks occupancy again. It requests a new instance of the exact prepared application through Launch Services and passes the URL as `-protocolString`. Beta 3 restores this behavior after the earlier sandbox experiment caused a Keychain save dialog. The beta retains version checking and a verified source cache; see [test results](KEYCHAIN-ISOLATION.md).
 6. The returned process must be new and match the expected path and bundle ID. An unexpected result is reported rather than counted as a successful new isolated session.
 
 Normal signing is ad-hoc. The optional certificate configuration is explicitly opt-in and is not a verified Keychain fix.
