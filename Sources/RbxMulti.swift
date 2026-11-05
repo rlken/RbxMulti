@@ -61,6 +61,7 @@ final class Model: ObservableObject {
     private var lastIdentityScan: Date = .distantPast
     private var identityScanInProgress = false
     private var preparingSlots = Set<String>()
+    private let officialLauncher = OfficialPlayerLauncher()
     private let preparationQueue = DispatchQueue(label: "com.rbxmulti.prepare", qos: .userInitiated)
     private let closedPlayerRetention: TimeInterval = 90
 
@@ -148,9 +149,17 @@ final class Model: ObservableObject {
         preparationQueue.async {
             do {
                 let signingIdentity = try IsolatedPlayer.SigningIdentity.configured()
-                let source = IsolatedPlayer.latestSource(installed: appURL, signingIdentity: signingIdentity)
-                let player = try IsolatedPlayer.prepare(source: source, slot: slot, runningAppURLs: runningURLs,
-                                                        signingIdentity: signingIdentity)
+                let required = try PlayerVersionCheck.requiredVersion(for: url)
+                var source = IsolatedPlayer.latestSource(installed: appURL, signingIdentity: signingIdentity, requiredVersion: required)
+                guard IsolatedPlayer.metadata(at: source)?["CFBundleShortVersionString"] as? String == required else {
+                    throw PlayerVersionCheck.Failure.updateRequired
+                }
+                if IsolatedPlayer.isOfficial(source) {
+                    source = try IsolatedPlayer.preserveOfficialSource(source)
+                } else if !IsolatedPlayer.isLocalSignedCopy(source, identity: signingIdentity, directory: IsolatedPlayer.root) {
+                    throw IsolatedPlayer.Failure.invalidSource
+                }
+                let player = try IsolatedPlayer.prepareOfficial(source: source, slot: slot, runningAppURLs: runningURLs)
                 DispatchQueue.main.async {
                     let livePlayers = robloxApps()
                     let liveIDs = IsolatedPlayer.occupiedIDs(bundleIDs: livePlayers.compactMap { $0.bundleIdentifier },
@@ -162,16 +171,12 @@ final class Model: ObservableObject {
                         return
                     }
                     let existingPIDs = Set(livePlayers.map { $0.processIdentifier })
-                    let configuration = NSWorkspace.OpenConfiguration()
-                    configuration.createsNewApplicationInstance = true
-                    configuration.allowsRunningApplicationSubstitution = false
-                    configuration.arguments = ["-protocolString", url.absoluteString]
-                    NSWorkspace.shared.openApplication(at: player.url, configuration: configuration) { app, error in
+                    self.officialLauncher.launch(app: player.url, profile: player.profile, link: url) { app, error in
                         DispatchQueue.main.async {
                             self.preparingSlots.remove(bundleID)
                             if let app {
                                 guard !existingPIDs.contains(app.processIdentifier),
-                                      app.bundleIdentifier == bundleID,
+                                      app.bundleIdentifier == robloxID,
                                       app.bundleURL?.standardizedFileURL == player.url.standardizedFileURL else {
                                     self.message = "Roblox did not open a new isolated session. Existing games were left running; try Play again."
                                     self.note("Launch returned an unexpected player; not counted as a new session")
@@ -179,7 +184,7 @@ final class Model: ObservableObject {
                                 }
                                 self.add(app)
                                 self.note("Started isolated session \(slot) (process \(app.processIdentifier))")
-                                self.message = "Session \(slot) has its own login storage."
+                                self.message = "Session \(slot) started with a separate cookie directory (preview)."
                             } else {
                                 self.message = "Could not start session \(slot): \(error?.localizedDescription ?? "unknown error")"
                                 self.note("Could not start isolated session \(slot)")
@@ -307,9 +312,9 @@ final class Model: ObservableObject {
         for i in items.indices {
             if live.contains(items[i].pid) {
                 if let app = apps.first(where: { $0.processIdentifier == items[i].pid }),
-                   let url = app.bundleURL, let expectedID = IsolatedPlayer.slotID(at: url) {
-                    let lost = app.bundleIdentifier != expectedID
-                        || IsolatedPlayer.metadata(at: url)?["CFBundleIdentifier"] as? String != expectedID
+                   let url = app.bundleURL, IsolatedPlayer.slotID(at: url) != nil {
+                    let lost = app.bundleIdentifier != robloxID
+                        || IsolatedPlayer.metadata(at: url)?["CFBundleIdentifier"] as? String != robloxID
                     if lost && !items[i].isolationLost {
                         note("Roblox updated \(items[i].name); relaunch that account when ready to restore separate login storage")
                     }

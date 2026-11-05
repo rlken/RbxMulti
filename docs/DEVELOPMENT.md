@@ -51,6 +51,7 @@ bash Tests/run-link-tests.sh
 | `run.sh` | Synthetic player bundles: log parsing, PID association, occupancy after updates, live-slot protection, source preservation, cache reuse, signing, update repair. Uses temporary files; does not launch real Roblox. |
 | `run-window-tests.sh` | AppKit window state, manual opening, URL hiding, close-to-background, reopening. Uses a model with runtime services disabled and a fake link handler. Requires a usable macOS GUI session. |
 | `run-link-tests.sh` | Actual Launch Services cold/warm URL delivery to a temporary test app. Does not claim Roblox URL schemes or launch Roblox. Leaves the printed temporary directory for inspection; requires a logged-in graphical session. |
+| `run-player-launch-tests.sh` | Historical sandbox experiment, excluded from the application and default tests. Its passing results did not cover Roblox’s credential-save dialog. See [failed experiment notes](KEYCHAIN-ISOLATION.md). |
 
 GUI tests may not work in a headless SSH/CI session. Default CI runs the non-GUI session tests and universal build; run GUI tests locally before shipping a lifecycle change. Neither suite proves that multiple live accounts can rejoin indefinitely.
 

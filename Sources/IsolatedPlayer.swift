@@ -74,6 +74,46 @@ enum IsolatedPlayer {
         return try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any]
     }
 
+    static func isOfficial(_ app: URL) -> Bool {
+        metadata(at: app)?["CFBundleIdentifier"] as? String == "com.roblox.RobloxPlayer"
+            && (try? run("/usr/bin/codesign", ["--verify", "--deep", "--strict", "-R",
+                "=anchor apple generic and identifier \"com.roblox.RobloxPlayer\" and certificate leaf[subject.OU] = \"2CFABCH843\"", app.path])) != nil
+    }
+
+    // Preserve the vendor signature BEFORE a slot is re-signed. Otherwise the
+    // next launch can select an older /Applications copy and update all over again.
+    static func preserveOfficialSource(_ source: URL, directory: URL = root,
+                                       verify: (URL) -> Bool = isOfficial) throws -> URL {
+        guard verify(source),
+              let version = metadata(at: source)?["CFBundleShortVersionString"] as? String,
+              version.range(of: "^[0-9]+(?:\\.[0-9]+){1,4}$", options: .regularExpression) != nil else {
+            throw Failure.invalidSource
+        }
+        let fm = FileManager.default
+        let sources = directory.appendingPathComponent("Sources", isDirectory: true)
+        let destination = sources.appendingPathComponent(version).appendingPathComponent("Roblox.app")
+        if verify(destination), metadata(at: destination)?["CFBundleShortVersionString"] as? String == version {
+            return destination
+        }
+        try fm.createDirectory(at: sources, withIntermediateDirectories: true, attributes: [.posixPermissions: 0o700])
+        let staging = sources.appendingPathComponent("prepare-\(UUID().uuidString)")
+        try fm.createDirectory(at: staging, withIntermediateDirectories: false)
+        defer { try? fm.removeItem(at: staging) }
+        let copy = staging.appendingPathComponent("Roblox.app")
+        do { try run("/bin/cp", ["-cR", source.path, copy.path]) }
+        catch {
+            if fm.fileExists(atPath: copy.path) { try fm.removeItem(at: copy) }
+            try fm.copyItem(at: source, to: copy)
+        }
+        guard verify(copy), metadata(at: copy)?["CFBundleShortVersionString"] as? String == version else {
+            throw Failure.invalidSource
+        }
+        let folder = destination.deletingLastPathComponent()
+        if fm.fileExists(atPath: folder.path) { try fm.removeItem(at: folder) }
+        try fm.moveItem(at: staging, to: folder)
+        return destination
+    }
+
     static func isLocalSignedCopy(_ app: URL, identity: SigningIdentity?, directory: URL) -> Bool {
         guard let identity, let id = slotID(at: app, directory: directory),
               metadata(at: app)?["CFBundleIdentifier"] as? String == id else { return false }
@@ -84,25 +124,56 @@ enum IsolatedPlayer {
     // Once an updated private copy is signed locally, it still needs to be
     // reusable as a source. Otherwise an older /Applications install wins on
     // the next launch and starts another update/re-signing cycle.
-    static func latestSource(installed: URL, directory: URL = root, signingIdentity: SigningIdentity? = nil) -> URL {
+    static func latestSource(installed: URL, directory: URL = root, signingIdentity: SigningIdentity? = nil,
+                             requiredVersion: String? = nil) -> URL {
         let slots = (try? FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)) ?? []
+        let sources = directory.appendingPathComponent("Sources")
+        let cached = (try? FileManager.default.contentsOfDirectory(at: sources, includingPropertiesForKeys: nil)) ?? []
         var best = installed
         var version = metadata(at: installed)?["CFBundleShortVersionString"] as? String ?? "0"
-        for folder in slots.sorted(by: { $0.path < $1.path }) {
+        if let requiredVersion, version != requiredVersion { version = "0" }
+        for folder in (slots + cached).sorted(by: { $0.path < $1.path }) {
             let app = folder.appendingPathComponent("Roblox.app", isDirectory: true)
-            guard slotID(at: app, directory: directory) != nil,
+            guard (slotID(at: app, directory: directory) != nil || folder.deletingLastPathComponent().standardizedFileURL.path == sources.standardizedFileURL.path),
                   let info = metadata(at: app),
                   info["CFBundleExecutable"] as? String == "RobloxPlayer",
                   let candidate = info["CFBundleShortVersionString"] as? String,
+                  requiredVersion == nil || candidate == requiredVersion,
                   candidate.compare(version, options: .numeric) == .orderedDescending else { continue }
-            let official = info["CFBundleIdentifier"] as? String == "com.roblox.RobloxPlayer"
-                && (try? run("/usr/bin/codesign", ["--verify", "--deep", "--strict", "-R",
-                    "=anchor apple generic and identifier \"com.roblox.RobloxPlayer\" and certificate leaf[subject.OU] = \"2CFABCH843\"", app.path])) != nil
+            let official = isOfficial(app)
             guard official || isLocalSignedCopy(app, identity: signingIdentity, directory: directory) else { continue }
             best = app
             version = candidate
         }
         return best
+    }
+
+    static func prepareOfficial(source: URL, slot: Int, runningAppURLs: [URL]) throws -> (url: URL, profile: URL) {
+        guard !runningAppURLs.contains(where: { slotID(at: $0) == bundleID(slot: slot) }), isOfficial(source) else {
+            throw Failure.occupiedSlot
+        }
+        let fm = FileManager.default
+        let folder = root.appendingPathComponent("slot\(slot)")
+        let app = folder.appendingPathComponent("Roblox.app", isDirectory: true)
+        try fm.createDirectory(at: folder, withIntermediateDirectories: true, attributes: [.posixPermissions: 0o700])
+        if !isOfficial(app) || metadata(at: app)?["CFBundleShortVersionString"] as? String != metadata(at: source)?["CFBundleShortVersionString"] as? String {
+            let staging = folder.appendingPathComponent("official-\(UUID().uuidString)")
+            defer { try? fm.removeItem(at: staging) }
+            do { try run("/bin/cp", ["-cR", source.path, staging.path]) }
+            catch {
+                if fm.fileExists(atPath: staging.path) { try fm.removeItem(at: staging) }
+                try fm.copyItem(at: source, to: staging)
+            }
+            guard isOfficial(staging) else { throw Failure.invalidSource }
+            if fm.fileExists(atPath: app.path) { try fm.removeItem(at: app) }
+            try fm.moveItem(at: staging, to: app)
+        }
+        let profile = folder.appendingPathComponent("Profiles/\(UUID().uuidString)")
+        for directory in ["Cookies", "HTTPStorages", "Caches", "Preferences", "Application Support"] {
+            try fm.createDirectory(at: profile.appendingPathComponent("Library/" + directory), withIntermediateDirectories: true,
+                                   attributes: [.posixPermissions: 0o700])
+        }
+        return (app, profile)
     }
 
     static func availableSlot(occupied: Set<String>) -> Int {
