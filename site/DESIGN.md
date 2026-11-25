@@ -70,7 +70,7 @@ The supplied RbxMulti icon anchors the page. Large black headlines, quiet neutra
 - Large, balanced headlines and readable body copy
 - Blue actions and purple details
 - A code-rendered MacBook frame around the RbxMulti interface
-- Motion is brief and respects reduced-motion settings
+- The MacBook preview drifts gently with a small 3D tilt and respects reduced-motion settings
 
 ## Colors
 
@@ -114,7 +114,7 @@ Use centered content containers with generous space between sections. The deskto
 Depth comes from subtle neutral borders and soft, offset shadows under the showcase and release cards. Keep accents flat; reserve hover lift for interactive cards and buttons.
 
 ### Shadow Vocabulary
-- **Showcase**: `0 27px 70px rgba(32,43,67,.12), 0 3px 9px rgba(32,43,67,.06)`.
+- **Showcase**: `0 21px 24px rgba(0,0,0,.16)`, paired with a gentle floating tilt.
 - **Release card**: `0 8px 25px rgba(36,47,68,.035)`.
 
 ## Shapes

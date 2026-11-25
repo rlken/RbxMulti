@@ -80,8 +80,13 @@ button { font: inherit; }
 .muted-button { color: #586171; }
 .muted-button:hover { color: var(--ink); }
 
-.macbook-showcase { width: min(100%, 1020px); margin: 0 auto 86px; }
-.macbook { position: relative; padding-bottom: 1px; filter: drop-shadow(0 21px 24px rgba(0,0,0,.16)); }
+.macbook-showcase { width: min(100%, 1080px); margin: 0 auto 86px; perspective: 1500px; }
+.macbook { position: relative; padding-bottom: 1px; transform-style: preserve-3d; filter: drop-shadow(0 21px 24px rgba(0,0,0,.16)); }
+.macbook-showcase.is-visible .macbook { animation: laptop-float 8s ease-in-out infinite; will-change: transform; }
+@keyframes laptop-float {
+  0%, 100% { transform: translateY(0) rotateX(3deg) rotateY(-6deg) rotateZ(-.35deg); }
+  50% { transform: translateY(-13px) rotateX(.5deg) rotateY(2deg) rotateZ(.2deg); }
+}
 .macbook-display { position: relative; z-index: 1; width: 94%; margin: 0 auto; padding: 16px; border: 1px solid #59616c; border-bottom-color: #3e454f; border-radius: 21px 21px 9px 9px; background: linear-gradient(135deg,#d7dbe0,#9ba3ad 35%,#e1e4e7 65%,#8e969f); box-shadow: inset 0 1px 0 rgba(255,255,255,.82), inset 0 -2px 3px rgba(28,35,45,.18); }
 .macbook-camera { position: absolute; z-index: 3; top: clamp(11px, 1.5vw, 19px); left: 50%; width: clamp(44px, 7vw, 78px); height: 11px; transform: translateX(-50%); border-radius: 0 0 8px 8px; background: #101216; }
 .macbook-screen { display: grid; grid-template-rows: 36px 1fr; gap: 6px; overflow: hidden; aspect-ratio: 1.6; padding: 8px; border: 1px solid #0f1115; border-radius: 10px 10px 3px 3px; background: #101216; }
