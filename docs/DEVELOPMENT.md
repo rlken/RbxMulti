@@ -11,7 +11,7 @@ cd RbxMulti
 swiftc --version
 ```
 
-Complete any Apple installation/terms prompts yourself. The project uses the system frameworks and command-line tools; no CocoaPods, Swift Package Manager packages, or npm dependencies are required. The repository currently has no open-source license; see the README before reusing or distributing code.
+Complete any Apple installation/terms prompts yourself. The native app uses system frameworks and command-line tools; no CocoaPods, Swift Package Manager packages, or npm dependencies are required to build it. The source is available under the [MIT License](../LICENSE). The companion website in `site/` uses HTML, Tailwind CSS from its CDN, custom CSS and JavaScript, and Google Fonts.
 
 ## Build
 
@@ -21,7 +21,7 @@ From the repository root:
 bash build.sh
 ```
 
-The script **replaces the generated `build/` directory**. Do not store personal files there. It compiles arm64 and x86_64 targets with a macOS 13 deployment minimum, combines them with `lipo`, generates the icon, ad-hoc signs the bundle, and creates:
+The script **replaces the generated `build/` directory**. Do not store personal files there. It compiles arm64 and x86_64 targets with a macOS 13 deployment minimum, combines them with `lipo`, generates the icon, includes the MIT license in the app bundle, ad-hoc signs the bundle, and creates:
 
 - `build/RbxMulti.app`
 - `build/RbxMulti.zip`

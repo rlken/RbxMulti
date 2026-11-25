@@ -4,11 +4,11 @@ Run multiple Roblox accounts on one Mac with a native menu-bar launcher.
 
 **Version 1.2.2 · macOS 13+ · Apple silicon and Intel**
 
-**[Download 1.2.2](https://github.com/rlken/RbxMulti/releases/tag/v1.2.2)** — browser Play now preserves Roblox’s official signature and uses separate cookie directories. See [what changed](docs/RELEASE-1.2.2.md).
+**[Download 1.2.2 from the website](https://rlken.github.io/RbxMulti/#download)** — browser Play now preserves Roblox’s official signature and uses separate cookie directories. See [what changed](docs/RELEASE-1.2.2.md).
 
 **First launch:** If macOS shows the expected Roblox Studio-sharing Keychain request, enter your login Keychain password only in that system dialog and select **Always Allow**. The maintainer confirmed that approval persists across launches and automatic rejoining works.
 
-[Download](https://github.com/rlken/RbxMulti/releases/latest) · [User guide](docs/USAGE.md) · [Troubleshooting](docs/TROUBLESHOOTING.md) · [Report a bug](https://github.com/rlken/RbxMulti/issues/new/choose)
+[Download](https://rlken.github.io/RbxMulti/#download) · [User guide](docs/USAGE.md) · [Troubleshooting](docs/TROUBLESHOOTING.md) · [Report a bug](https://github.com/rlken/RbxMulti/issues/new/choose)
 
 ## Features
 
@@ -22,7 +22,7 @@ Run multiple Roblox accounts on one Mac with a native menu-bar launcher.
 
 Requires macOS 13 or later and the official Roblox app, preferably installed at `/Applications/Roblox.app`. Roblox must work normally on your Mac first. Each extra player uses additional memory and storage; Roblox is not included in the download.
 
-1. Download **RbxMulti.zip** from the [release page](https://github.com/rlken/RbxMulti/releases/latest).
+1. Download **RbxMulti.zip** from the [RbxMulti website](https://rlken.github.io/RbxMulti/#download).
 2. Unzip it and move **RbxMulti.app** into Applications. Keep only one installed copy.
 3. Open RbxMulti once and confirm any expected link-opening prompts.
 4. Check that the manager says **Play links ready**.
@@ -68,9 +68,10 @@ To stop using RbxMulti, select the gear menu → **Restore Roblox links…**, th
 - [Privacy](docs/PRIVACY.md): network requests, local storage, and permissions
 - [Build and test](docs/DEVELOPMENT.md) · [Architecture](docs/ARCHITECTURE.md) · [Changelog](CHANGELOG.md)
 - [Contributing](CONTRIBUTING.md) · [Signing research](docs/SIGNING-RESEARCH.md)
+- [Website source](site/index.html)
 
 Never include cookies, authentication tickets, full launch URLs, Keychain contents, or raw Roblox logs in public reports.
 
 Unofficial and not affiliated with Roblox. Use only accounts you are authorized to access and follow Roblox's and each experience's rules.
 
-**License:** public source, with no open-source license granted at this time. Contact the owner before reuse. This repository grants no rights to Roblox's software, assets, or trademarks.
+**License:** RbxMulti source code is released under the [MIT License](LICENSE). This license does not grant rights to Roblox's software, assets, or trademarks.

@@ -25,4 +25,4 @@ Rejoin status updated October 22, 2026: the maintainer reports no recurrence in 
 
 [User guide](https://github.com/rlken/RbxMulti/blob/main/docs/USAGE.md) · [Troubleshooting](https://github.com/rlken/RbxMulti/blob/main/docs/TROUBLESHOOTING.md)
 
-Unofficial; not affiliated with Roblox. No open-source license has been granted.
+Unofficial; not affiliated with Roblox. This release note was written before the repository adopted the MIT License; see the current [license](../LICENSE).

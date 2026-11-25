@@ -1,0 +1,39 @@
+name: Deploy website
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - name: Prepare the public site
+        run: |
+          mkdir -p "$RUNNER_TEMP/pages-site"
+          cp -R site/. "$RUNNER_TEMP/pages-site/"
+          rm -rf "$RUNNER_TEMP/pages-site/.impeccable" "$RUNNER_TEMP/pages-site/DESIGN.md"
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ runner.temp }}/pages-site
+      - id: deployment
+        uses: actions/deploy-pages@v4

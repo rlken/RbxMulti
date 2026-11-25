@@ -20,3 +20,6 @@ identity.plist
 # One-off local maintenance tools, not portable project tests
 /Tests/PrepareInstalledPlayer.swift
 /Tests/RestoreSigningExperiment.swift
+
+# Local design tooling metadata
+**/.impeccable/
