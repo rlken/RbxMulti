@@ -14,6 +14,7 @@ for s in 16 32 128 256 512; do
 done
 iconutil -c icns build/icon.iconset -o $APP/Contents/Resources/AppIcon.icns
 cp Info.plist $APP/Contents/Info.plist
+cp LICENSE $APP/Contents/Resources/LICENSE.txt
 codesign --force --deep --sign - $APP
 (cd build && ditto -c -k --keepParent RbxMulti.app RbxMulti.zip)
 echo "Built build/RbxMulti.zip"
