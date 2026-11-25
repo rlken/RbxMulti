@@ -69,7 +69,7 @@ The supplied RbxMulti icon anchors the page. Large black headlines, quiet neutra
 - Light canvas with sparse ambient particles
 - Large, balanced headlines and readable body copy
 - Blue actions and purple details
-- A code-rendered MacBook frame around the RbxMulti interface
+- A floating MacBook frame containing a crop of the owner’s actual RbxMulti window screenshot
 - The MacBook preview drifts gently with a small 3D tilt and respects reduced-motion settings
 
 ## Colors
@@ -134,7 +134,7 @@ Cards use softly rounded corners (14–20px), the laptop display uses a 21px fra
 
 ### Laptop Showcase
 - **Frame:** a CSS-rendered aluminum laptop shell with a dark inner bezel and a product window sized within the display.
-- **Interface:** use accurate RbxMulti labels and mark the mockup as illustrative. Avoid invented usernames or session-time values.
+- **Interface:** use accurate RbxMulti labels and mark the mockup as illustrative. Use the owner-provided app screenshot in the display instead of recreating the interface.
 
 ### Navigation
 - **Desktop:** compact translucent light header, brand at left, section links and download action at right.
