@@ -52,9 +52,7 @@ Use the gear menu's **Notify when a player closes** option to request macOS noti
 
 ## Auto Clicker
 
-The **Auto Clicker** section is a general-purpose tool for accessibility and app testing. It clicks at the current pointer position every 0.05–5 seconds; use **Start/Stop** or F6, and reset the click count as needed. It will not start while Roblox is the frontmost app and stops if Roblox comes forward. It is not for automating Roblox play.
-
-Click posting requires macOS Accessibility permission. The global F6 shortcut also needs Input Monitoring permission; both can be requested from the on-screen prompts. Replacing or rebuilding the ad-hoc-signed app may require granting those permissions again. If F6 is not enabled, the Start/Stop button still works.
+The **Auto Clicker** section clicks at the current pointer position every 0.05–5 seconds in the active app. Place the pointer over the intended target, then use **Start/Stop** or F6; reset the click count as needed. Click posting requires macOS Accessibility permission; global F6 also needs Input Monitoring permission. Request either from its on-screen prompt. Replacing or rebuilding the ad-hoc-signed app may require granting permissions again. Start/Stop works without F6.
 
 ## Updates and removal
 

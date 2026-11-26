@@ -1,6 +1,6 @@
 # Privacy, permissions, and local changes
 
-This describes RbxMulti 1.2.3, not Roblox's own data practices or a guarantee about future builds.
+This describes RbxMulti 1.2.4, not Roblox's own data practices or a guarantee about future builds.
 
 ## Data flow
 
@@ -10,7 +10,7 @@ This describes RbxMulti 1.2.3, not Roblox's own data practices or a guarantee ab
 - The source contains no analytics/crash-reporting backend for RbxMulti. Roblox and the browser have their own network behavior, outside this utility's control.
 - Clicking the footer's GitHub button opens the maintainer's public profile in your default browser. The app does not contact GitHub automatically.
 - Account names, detected IDs, avatar URLs, and the last 30 Activity events are held in memory. Keep Mac awake, player-close alert preference, and native window placement are persisted in preferences. If enabled, macOS notifications report that a tracked Roblox process closed; the app does not monitor game connection state. The launcher is not a password manager.
-- The optional Auto Clicker posts a left click at the current pointer location on the selected interval and listens only for F6 as its global shortcut. It does not record keystrokes or store click locations/counts. macOS Accessibility permission is needed to post clicks; Input Monitoring is needed for F6 outside RbxMulti. The built-in frontmost Roblox guard blocks clicking in Roblox.
+- The optional Auto Clicker posts a left click at the current pointer location on the selected interval and listens only for F6 as its global shortcut. It does not record keystrokes or store click locations/counts. macOS Accessibility permission is needed to post clicks; Input Monitoring is needed for F6 outside RbxMulti. Clicks go to whichever app is active at that screen location.
 
 ## Changes made during normal use
 

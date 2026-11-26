@@ -7,8 +7,6 @@ import ApplicationServices
 /// A general-purpose auto clicker for accessibility and app testing.
 /// Clicks at the current cursor position on a fixed interval.
 ///
-/// Built-in safety: it will NOT click while a Roblox window is the frontmost app,
-/// and it stops itself if Roblox comes to the front. Do not remove this check.
 @MainActor
 final class AutoClicker: ObservableObject {
 
@@ -79,11 +77,6 @@ final class AutoClicker: ObservableObject {
             requestClickPermission()
             return
         }
-        guard !robloxIsFrontmost() else {
-            status = "Blocked: Roblox is in front"
-            return
-        }
-
         isRunning = true
         status = "Running"
         scheduleTimer()
@@ -122,11 +115,6 @@ final class AutoClicker: ObservableObject {
             stop(message: "Stopped: click permission was removed")
             return
         }
-        // Re-check every tick so switching to Roblox stops the clicker right away.
-        if robloxIsFrontmost() {
-            stop(message: "Stopped: Roblox came to the front")
-            return
-        }
         click()
     }
 
@@ -139,13 +127,6 @@ final class AutoClicker: ObservableObject {
                     mouseButton: .left)?.post(tap: .cghidEventTap)
         }
         clickCount += 1
-    }
-
-    private func robloxIsFrontmost() -> Bool {
-        guard let app = NSWorkspace.shared.frontmostApplication else { return false }
-        let name = app.localizedName?.lowercased() ?? ""
-        let bundle = app.bundleIdentifier?.lowercased() ?? ""
-        return name.contains("roblox") || bundle.contains("roblox")
     }
 
     private func installHotkey() {
@@ -213,7 +194,7 @@ struct AutoClickerView: View {
                     .buttonStyle(.borderless)
             }
 
-            Text("Roblox is blocked while frontmost; clicking stops if it comes forward.")
+            Text("Clicks at the current pointer position in the active app.")
                 .font(.caption2)
                 .foregroundStyle(.secondary)
         }

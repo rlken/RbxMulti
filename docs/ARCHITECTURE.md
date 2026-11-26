@@ -10,7 +10,7 @@ RbxMulti is a native SwiftUI/AppKit application, not a port of a Windows mutex u
 | --- | --- |
 | `Sources/AppLifecycle.swift` | AppKit entry point, menu-bar item, explicit window lifecycle, queued URL handling. |
 | `Sources/LauncherViews.swift` | Accounts, avatars, warnings, Activity, confirmations, and guidance. |
-| `Sources/AutoClicker.swift` | Optional interval-based clicker, F6 shortcut, permission checks, and Roblox frontmost guard. |
+| `Sources/AutoClicker.swift` | Optional interval-based clicker, F6 shortcut, and permission checks. |
 | `Sources/RbxMulti.swift` | Process discovery, launch orchestration, identity/profile requests, URL handlers, wake assertion, and optional process-exit notifications. |
 | `Sources/IsolatedPlayer.swift` | Occupancy checks, source selection, per-slot copies, signing, cache verification. |
 | `Sources/PlayerSessionLog.swift` | PID-to-open-log association and initial/latest join user-ID parsing. |
@@ -41,7 +41,7 @@ Names and headshots use public Roblox APIs. Process lifetime, game connection st
 - Do not log protocol URLs or obtain browser cookies/passwords.
 - Do not claim that signature checks demonstrate Keychain continuity.
 - Keep process status distinct from in-game connectivity.
-- The optional clicker is blocked whenever Roblox is frontmost and stops when Roblox comes forward. No game-code injection, AFK/reconnect automation, account vault, or automatic updater is implemented.
+- The optional clicker posts ordinary mouse clicks at the current pointer location in the active app. It does not inject game code. No account vault or automatic updater is implemented.
 - Opening/hiding/quitting the manager must not implicitly terminate players. Explicit confirmed Close controls are destructive and currently force termination.
 
 Local code preparation tests cannot establish Roblox compatibility or long-running rejoin correctness. Those need separate, consented live tests.

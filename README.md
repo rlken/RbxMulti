@@ -2,9 +2,9 @@
 
 Run multiple Roblox accounts on one Mac with a native menu-bar launcher.
 
-**Version 1.2.3 · macOS 13+ · Apple silicon and Intel**
+**Version 1.2.4 · macOS 13+ · Apple silicon and Intel**
 
-**[Download 1.2.3 from the website](https://rlken.github.io/RbxMulti/#download)** — adds an optional clicker for general accessibility and app testing, with a Roblox frontmost-app guard. Browser Play continues to use separate player instances. See the [user guide](docs/USAGE.md#auto-clicker).
+**[Download 1.2.4 from the website](https://rlken.github.io/RbxMulti/#download)** — adds an optional interval clicker for accessibility and app testing. It clicks at the pointer position in the active app. Browser Play continues to use separate player instances. See the [user guide](docs/USAGE.md#auto-clicker).
 
 **First launch:** macOS may ask RbxMulti for Accessibility and Input Monitoring access if you enable the Auto Clicker. Grant only the permissions you want to use; the Start/Stop button works without the global F6 shortcut permission.
 
@@ -17,7 +17,7 @@ Run multiple Roblox accounts on one Mac with a native menu-bar launcher.
 - Show or close individual players and view recent launch activity.
 - Keep the manager in the menu bar without opening its window on every Play click.
 - Optionally keep your Mac awake while the manager runs.
-- Use the optional Auto Clicker for general accessibility and app testing; it stops when Roblox comes to the front.
+- Use the optional Auto Clicker for accessibility and app testing, with clicks sent to the active app at the pointer position.
 - Optionally receive a macOS notification when a tracked Roblox player process closes.
 
 ## Install
@@ -49,7 +49,7 @@ To reopen the manager, use its stacked-windows menu-bar icon → **Show accounts
 
 ## Important limitations
 
-- **No Roblox automation.** The optional Auto Clicker is blocked while Roblox is the frontmost app and stops if Roblox comes forward. It is for other apps, accessibility, and app testing only.
+- **The Auto Clicker sends ordinary left clicks** to the active app at the current pointer position. It does not modify or inject into app code.
 - **Keychain prompts may repeat**, including after “Always Allow.” The experimental signing option is not a fix and is disabled by default.
 - **Player running means the process exists**, not that it is connected to a game. A disconnected player remains listed until its process closes.
 - **Roblox updates can reset session isolation.** Relaunch an affected player when the manager warns you.

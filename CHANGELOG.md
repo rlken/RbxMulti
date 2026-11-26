@@ -2,6 +2,12 @@
 
 This is a feature history, not a claim that every earlier version had a public GitHub release.
 
+## 1.2.4
+
+- Remove the Roblox foreground-app check from the optional Auto Clicker.
+- Describe click delivery accurately: left clicks go to the current pointer position in the active app.
+- Keep the interval, Start/Stop, F6, click counter, and macOS permission flows.
+
 ## 1.2.3
 
 - Add an optional interval-based Auto Clicker for general accessibility and app testing, with Start/Stop, F6, interval control, and click count.
