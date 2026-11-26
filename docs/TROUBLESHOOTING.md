@@ -14,7 +14,7 @@ The manager intentionally stays hidden when it receives Play links. Lack of a ma
 
 ## Auto Clicker says permission is missing
 
-RbxMulti 1.2.7 checks the macOS event-posting permission used by synthetic mouse clicks; it no longer requires the separate Accessibility API trust check. Click **Allow** in Auto Clicker and approve the macOS request. If an older ad-hoc build left a stale checked RbxMulti row, remove that old row in System Settings, reopen RbxMulti, and grant access again. Reopen the app if the status does not refresh. Future website releases keep a certificate-anchored code identity so this grant can persist across updates.
+RbxMulti 1.2.8 requests both macOS Accessibility trust and event-posting access. Click **Allow**; if access is still missing, it opens **System Settings → Privacy & Security → Accessibility**. Enable RbxMulti there, then return to the app. If an older ad-hoc build left a stale row, remove the old RbxMulti entry and grant the current app access again. Reopen RbxMulti if the status does not refresh. Public releases use a stable code identity so this grant can persist across updates.
 
 ## The third player returns to the home page
 

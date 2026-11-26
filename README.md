@@ -2,11 +2,11 @@
 
 Run multiple Roblox accounts on one Mac with a native menu-bar launcher.
 
-**Version 1.2.7 · macOS 13+ · Apple silicon and Intel**
+**Version 1.2.8 · macOS 13+ · Apple silicon and Intel**
 
-**[Download 1.2.7 from the website](https://rlken.github.io/RbxMulti/#download)** — includes automatic, signature-verified updates and a permission fix for the optional interval clicker. Browser Play continues to use separate player instances. See the [user guide](docs/USAGE.md#auto-clicker).
+**[Download 1.2.8 from the website](https://rlken.github.io/RbxMulti/#download)** — includes automatic, signature-verified updates and a fix for the optional interval clicker's macOS permission flow. Browser Play continues to use separate player instances. See the [user guide](docs/USAGE.md#auto-clicker).
 
-**First launch:** macOS asks for event-posting permission when you enable clicking, and Input Monitoring only for the global F6 shortcut. Start/Stop works without F6 permission.
+**First launch:** macOS asks for Accessibility permission when you enable clicking, and Input Monitoring only for the global F6 shortcut. Start/Stop works without F6 permission.
 
 [Download](https://rlken.github.io/RbxMulti/#download) · [User guide](docs/USAGE.md) · [Troubleshooting](docs/TROUBLESHOOTING.md) · [Report a bug](https://github.com/rlken/RbxMulti/issues/new/choose)
 

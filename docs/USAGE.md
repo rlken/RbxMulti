@@ -58,7 +58,7 @@ Update archives are validated with an Ed25519 signature embedded in the app. The
 
 ## Auto Clicker
 
-The **Auto Clicker** section clicks at the current pointer position every 0.05–5 seconds in the active app. Place the pointer over the intended target, then use **Start/Stop** or F6; reset the click count as needed. Click posting requests macOS event-synthesizing access; global F6 separately needs Input Monitoring. Start/Stop works without F6. After changing permissions, reopen RbxMulti if its status has not refreshed.
+The **Auto Clicker** section clicks at the current pointer position every 0.05–5 seconds in the active app. Place the pointer over the intended target, then use **Start/Stop** or F6; reset the click count as needed. Click posting requests macOS Accessibility and event-posting access; global F6 separately needs Input Monitoring. Start/Stop works without F6. If click access remains unavailable, enable RbxMulti in **System Settings → Privacy & Security → Accessibility**, then reopen RbxMulti if its status has not refreshed.
 
 ## Updates and removal
 

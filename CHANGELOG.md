@@ -2,9 +2,15 @@
 
 This is a feature history, not a claim that every earlier version had a public GitHub release.
 
+## 1.2.8
+
+- Restore the Accessibility trust request and check required by macOS click posting.
+- Open Privacy & Security → Accessibility if the permission is still missing after Allow.
+- Refresh click permission after either approval path.
+
 ## 1.2.7
 
-- Check the actual macOS event-posting permission used by mouse clicks; stop asking for unrelated Accessibility API access.
+- Check the macOS event-posting permission used by mouse clicks.
 - Keep click permission grants stable across website releases with a persistent certificate-anchored code signature.
 - Explain when reopening RbxMulti is needed after changing permission.
 

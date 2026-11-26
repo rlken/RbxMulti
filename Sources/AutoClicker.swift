@@ -14,7 +14,7 @@ final class AutoClicker: ObservableObject {
     @Published var interval: Double = 1.0        // seconds between clicks
     @Published var clickCount = 0
     @Published var status = "Ready"
-    @Published var hasClickPermission = CGPreflightPostEventAccess()
+    @Published var hasClickPermission = AXIsProcessTrusted() && CGPreflightPostEventAccess()
     @Published var hasInputMonitoring = CGPreflightListenEventAccess()
 
     /// F6 by default. Change the key code here if you want another hotkey.
@@ -37,10 +37,18 @@ final class AutoClicker: ObservableObject {
 
     // MARK: Permissions
 
-    /// Click posting uses macOS event-synthesizing authorization.
+    /// Click posting requires Accessibility trust and macOS event-posting authorization.
     func requestClickPermission() {
+        let key = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String
+        _ = AXIsProcessTrustedWithOptions([key: true] as CFDictionary)
         _ = CGRequestPostEventAccess()
-        refreshPermissionsSoon()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+            guard let self else { return }
+            self.refreshPermissions()
+            guard !self.hasClickPermission,
+                  let url = URL(string: "x-apple.systempreferences:com.apple.settings.PrivacySecurity.extension?Privacy_Accessibility") else { return }
+            NSWorkspace.shared.open(url)
+        }
     }
 
     /// The global F6 listener uses the separate macOS Input Monitoring permission.
@@ -56,7 +64,7 @@ final class AutoClicker: ObservableObject {
     }
 
     func refreshPermissions() {
-        hasClickPermission = CGPreflightPostEventAccess()
+        hasClickPermission = AXIsProcessTrusted() && CGPreflightPostEventAccess()
         let wasListening = hasInputMonitoring
         hasInputMonitoring = CGPreflightListenEventAccess()
         if hasInputMonitoring && !wasListening { installHotkey() }
@@ -108,7 +116,7 @@ final class AutoClicker: ObservableObject {
     }
 
     private func tick() {
-        if !CGPreflightPostEventAccess() {
+        if !AXIsProcessTrusted() || !CGPreflightPostEventAccess() {
             stop(message: "Stopped: click permission was removed")
             return
         }
@@ -164,8 +172,8 @@ struct AutoClickerView: View {
             }
 
             if !clicker.hasClickPermission {
-                permissionRow("macOS permission is needed to post clicks.", button: "Allow", action: clicker.requestClickPermission)
-                Text("After allowing access, reopen RbxMulti if this notice remains.")
+                permissionRow("Accessibility access is needed to post clicks.", button: "Allow", action: clicker.requestClickPermission)
+                Text("Enable RbxMulti in Privacy & Security → Accessibility. Reopen the app if needed.")
                     .font(.system(size: 11)).foregroundStyle(LauncherStyle.secondaryText)
             }
             if !clicker.hasInputMonitoring {

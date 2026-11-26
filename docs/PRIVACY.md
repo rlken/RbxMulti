@@ -1,6 +1,6 @@
 # Privacy, permissions, and local changes
 
-This describes RbxMulti 1.2.7, not Roblox's own data practices or a guarantee about future builds.
+This describes RbxMulti 1.2.8, not Roblox's own data practices or a guarantee about future builds.
 
 ## Data flow
 
