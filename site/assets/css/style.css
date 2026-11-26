@@ -105,7 +105,7 @@ button { font: inherit; }
 .key-row span { display: grid; min-width: 0; flex: 1 1 0; place-items: center; overflow: hidden; border: 1px solid rgba(205,210,216,.16); border-radius: 2px; color: #b7bbc1; background: linear-gradient(180deg,#373b42,#22252a); box-shadow: 0 1px 1px rgba(21,25,31,.55); font: 500 clamp(2px, .34vw, 4px)/1 Inter, sans-serif; }
 .key-row .key-wide { flex-grow: 1.55; }
 .key-row .space-key { flex-grow: 4.3; }
-.function-row span { color: #90969f; background: linear-gradient(180deg,#4a4f57,#2e3238); }
+.function-row span { color: #c0c4ca; background: linear-gradient(180deg,#4a4f57,#2e3238); }
 .trackpad { width: 24%; height: clamp(13px, 2vw, 19px); margin-top: 4px; border: 1px solid rgba(114,121,130,.62); border-radius: 3px; background: linear-gradient(150deg,rgba(247,248,249,.42),rgba(179,185,192,.33)); box-shadow: inset 0 0 0 1px rgba(255,255,255,.28), 0 1px 1px rgba(80,87,97,.14); }
 .device-showcase.is-visible .studio-display, .device-showcase.is-visible .macbook-pro { opacity: 1; transform: translateX(0); }
 .showcase-caption { display: block; padding-top: 13px; color: #515b69; font-size: 12px; text-align: center; }
