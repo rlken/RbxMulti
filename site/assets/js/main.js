@@ -60,7 +60,7 @@
   const canvas = document.querySelector('#ambient-canvas');
   if (canvas && !reducedMotion) {
     const context = canvas.getContext('2d');
-    const colors = ['38, 111, 219', '117, 86, 201', '198, 152, 105'];
+    const colors = ['163, 36, 185', '222, 62, 214', '117, 86, 201'];
     let width = 0, height = 0, particles = [], frame = 0;
     const resize = () => {
       const ratio = Math.min(window.devicePixelRatio || 1, 2);

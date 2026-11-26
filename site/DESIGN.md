@@ -2,8 +2,8 @@
 name: RbxMulti Website
 description: A clear product page for the RbxMulti macOS app.
 colors:
-  primary: "#1768d5"
-  secondary: "#7254cc"
+  primary: "#a324b9"
+  secondary: "#d52cf0"
   neutral-bg: "#f8f9fc"
   neutral-surface: "#ffffff"
   neutral-text: "#191c22"
@@ -47,7 +47,7 @@ components:
     rounded: "{rounded.pill}"
     padding: "15px 25px"
   button-primary-hover:
-    backgroundColor: "#0e58bb"
+    backgroundColor: "#9120aa"
   card-release:
     backgroundColor: "{colors.neutral-surface}"
     textColor: "{colors.neutral-text}"
@@ -63,25 +63,24 @@ components:
 
 The site follows the clean, light product-page reference the owner selected. It opens with the app identity and one direct action, explains the real product in a feature showcase, then presents actual releases and support links. The visual identity belongs to this website; the native macOS app keeps its existing system appearance.
 
-The supplied RbxMulti icon anchors the page. Large black headlines, quiet neutrals, and restrained blue and purple accents keep the product visible without adding claims or decorative noise.
+The supplied RbxMulti icon anchors the page. Large black headlines, quiet neutrals, and purple-pink accents carry through the RbxMulti interface without adding claims or decorative noise.
 
 **Key Characteristics:**
 - Light canvas with sparse ambient particles
 - Large, balanced headlines and readable body copy
-- Blue actions and purple details
+- Purple-pink actions and violet details sampled from the RbxMulti interface
 - A Studio Display behind a MacBook Pro, each showing the owner’s actual RbxMulti window screenshot
 - Scroll-triggered entrance: the display slides in from the left and the MacBook Pro from the right; neither device floats continuously
-- The two devices enter from opposite sides when the showcase is scrolled into view
 
 ## Colors
 
-The palette pairs cool light surfaces with dark text, a blue action color, and a smaller purple accent.
+The palette pairs cool light surfaces and dark text with an accessible purple-pink action color and a brighter magenta accent from the app UI.
 
 ### Primary
-- **Link Blue**: used for primary actions and selected headline emphasis.
+- **Rbx Accent**: used for primary actions, links, and selected headline emphasis.
 
 ### Secondary
-- **Rbx Purple**: used for selected tabs and small interface accents.
+- **App Magenta**: used for smaller interface accents.
 
 ### Neutral
 - **Cool Paper**: page background.
@@ -125,16 +124,16 @@ Cards use softly rounded corners (14–20px), the Studio Display and MacBook Pro
 ## Components
 
 ### Buttons
-- **Primary:** blue pill with white text, 15px × 25px padding, and a small lift on hover.
-- **Focus:** visible blue outline with offset for keyboard users.
-- **Text actions:** blue or slate links with underlines on hover.
+- **Primary:** purple-pink pill with white text, 15px × 25px padding, and a small lift on hover.
+- **Focus:** visible purple-pink outline with offset for keyboard users.
+- **Text actions:** purple-pink or slate links with underlines on hover.
 
 ### Cards
 - **Release cards:** white surfaces with a small icon illustration, release label, version, system requirement, and direct release link.
 - **Archive card:** compact text-led surface with a round external-link action.
 
 ### Device Showcase
-- **Frame:** CSS-rendered aluminum Studio Display behind a full MacBook Pro model, including the black screen notch, keyboard deck, and centered trackpad.
+- **Frame:** layered device images cropped from the owner-provided reference, with the Studio Display behind a notched MacBook Pro. Keep the MacBook's slim silver base visible without drawing a keyboard.
 - **Interface:** show the owner-provided RbxMulti app screenshot on both screens; do not recreate the interface.
 - **Motion:** on scroll into view, slide the display in from the left and the MacBook Pro in from the right. Respect reduced-motion settings and do not loop or float after entry.
 
