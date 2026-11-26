@@ -2,6 +2,9 @@
 
 This is a feature history, not a claim that every earlier version had a public GitHub release.
 
+## 1.2.11
+- Use Roblox's newest verified official player bundle, including the browser-installed update cache, when preparing a separate session.
+
 ## 1.2.10
 
 - Stop gating mouse clicks on Accessibility API trust; check the event-posting permission used by CGEvent.

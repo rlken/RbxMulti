@@ -121,6 +121,28 @@ enum IsolatedPlayer {
             "=" + identity.requirement(bundleID: id), app.path])) != nil
     }
 
+    /// Roblox's browser installer can update the player under ~/Library/Roblox
+    /// while leaving an older /Applications/Roblox.app in place. Include those
+    /// official installs when choosing a source for a new isolated session.
+    private static func installedPlayerCandidates() -> [URL] {
+        let roblox = FileManager.default.homeDirectoryForCurrentUser
+            .appendingPathComponent("Library/Roblox", isDirectory: true)
+        var candidates = [
+            roblox.appendingPathComponent("UnzippedBundle/RobloxPlayer.app", isDirectory: true),
+            roblox.appendingPathComponent("RobloxPlayer.app", isDirectory: true),
+            roblox.appendingPathComponent("Roblox.app", isDirectory: true)
+        ]
+        let versions = roblox.appendingPathComponent("Versions", isDirectory: true)
+        if let folders = try? FileManager.default.contentsOfDirectory(at: versions,
+                                                                      includingPropertiesForKeys: nil) {
+            for folder in folders {
+                candidates.append(folder.appendingPathComponent("RobloxPlayer.app", isDirectory: true))
+                candidates.append(folder.appendingPathComponent("Roblox.app", isDirectory: true))
+            }
+        }
+        return candidates
+    }
+
     // Once an updated private copy is signed locally, it still needs to be
     // reusable as a source. Otherwise an older /Applications install wins on
     // the next launch and starts another update/re-signing cycle.
@@ -130,18 +152,24 @@ enum IsolatedPlayer {
         let sources = directory.appendingPathComponent("Sources")
         let cached = (try? FileManager.default.contentsOfDirectory(at: sources, includingPropertiesForKeys: nil)) ?? []
         var best = installed
-        var version = metadata(at: installed)?["CFBundleShortVersionString"] as? String ?? "0"
-        if let requiredVersion, version != requiredVersion { version = "0" }
-        for folder in (slots + cached).sorted(by: { $0.path < $1.path }) {
-            let app = folder.appendingPathComponent("Roblox.app", isDirectory: true)
-            guard (slotID(at: app, directory: directory) != nil || folder.deletingLastPathComponent().standardizedFileURL.path == sources.standardizedFileURL.path),
+        var version = "0"
+        let managed = (slots + cached).map { $0.appendingPathComponent("Roblox.app", isDirectory: true) }
+        let installedCandidates = [installed] + installedPlayerCandidates()
+        var seen = Set<String>()
+        for app in (installedCandidates + managed).sorted(by: { $0.path < $1.path }) {
+            let path = app.standardizedFileURL.path
+            guard seen.insert(path).inserted,
                   let info = metadata(at: app),
                   info["CFBundleExecutable"] as? String == "RobloxPlayer",
                   let candidate = info["CFBundleShortVersionString"] as? String,
                   requiredVersion == nil || candidate == requiredVersion,
                   candidate.compare(version, options: .numeric) == .orderedDescending else { continue }
+            let isManaged = slotID(at: app, directory: directory) != nil
+                || app.deletingLastPathComponent().deletingLastPathComponent().standardizedFileURL.path == sources.standardizedFileURL.path
+            let isInstalled = installedCandidates.contains { $0.standardizedFileURL == app.standardizedFileURL }
             let official = isOfficial(app)
-            guard official || isLocalSignedCopy(app, identity: signingIdentity, directory: directory) else { continue }
+            guard (isManaged || isInstalled)
+                    && (official || (isManaged && isLocalSignedCopy(app, identity: signingIdentity, directory: directory))) else { continue }
             best = app
             version = candidate
         }

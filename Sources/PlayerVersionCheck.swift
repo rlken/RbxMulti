@@ -7,7 +7,7 @@ enum PlayerVersionCheck {
             switch self {
             case .unavailable: return "Could not check Roblox's current version. Check your connection and try Play again."
             case .invalidChannel: return "The Roblox launch link has an unsupported update channel. Open a fresh Play link from the Roblox website."
-            case .updateRequired: return "Roblox needs an update before a separate session can open. Update the official Roblox app, close its home window, then click Play in your browser again."
+            case .updateRequired: return "Roblox's latest player is not installed yet. Open Roblox once to finish its update, then click Play in your browser again."
             }
         }
     }
