@@ -2,7 +2,19 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-./build.sh
+signing_identity=${RBXMULTI_CODESIGN_IDENTITY:-"RbxMulti Stable Code Signing"}
+if ! security find-identity -v -p codesigning | grep -Fq "$signing_identity"; then
+  echo "Missing persistent code-signing identity: $signing_identity" >&2
+  echo "Create it once with scripts/setup-signing-identity.sh, then retry." >&2
+  exit 1
+fi
+RBXMULTI_CODESIGN_IDENTITY="$signing_identity" ./build.sh
+
+designated_requirement=$(codesign -d -r- build/RbxMulti.app 2>&1 | sed -n 's/^designated => //p')
+case "$designated_requirement" in
+  *"certificate leaf"*) ;;
+  *) echo "Release app lacks a stable certificate-anchored designated requirement: $designated_requirement" >&2; exit 1 ;;
+esac
 
 version=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Info.plist)
 build_number=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' Info.plist)

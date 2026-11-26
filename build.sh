@@ -26,6 +26,11 @@ iconutil -c icns build/icon.iconset -o $APP/Contents/Resources/AppIcon.icns
 cp Info.plist $APP/Contents/Info.plist
 cp LICENSE $APP/Contents/Resources/LICENSE.txt
 cp build/sparkle/LICENSE $APP/Contents/Resources/Sparkle-LICENSE.txt
-codesign --force --deep --sign - $APP
+if [ -n "${RBXMULTI_CODESIGN_IDENTITY:-}" ]; then
+  codesign --force --deep --sign "$RBXMULTI_CODESIGN_IDENTITY" --timestamp=none "$APP"
+else
+  # Local/CI builds can run without the maintainer's persistent release identity.
+  codesign --force --deep --sign - "$APP"
+fi
 (cd build && ditto -c -k --keepParent RbxMulti.app RbxMulti.zip)
 echo "Built build/RbxMulti.zip"

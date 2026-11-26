@@ -12,6 +12,10 @@ Start by opening the manager → Activity. Record the launcher version, macOS ve
 
 The manager intentionally stays hidden when it receives Play links. Lack of a manager window is not itself a launch failure.
 
+## Auto Clicker says permission is missing
+
+RbxMulti 1.2.7 checks the macOS event-posting permission used by synthetic mouse clicks; it no longer requires the separate Accessibility API trust check. Click **Allow** in Auto Clicker and approve the macOS request. If an older ad-hoc build left a stale checked RbxMulti row, remove that old row in System Settings, reopen RbxMulti, and grant access again. Reopen the app if the status does not refresh. Future website releases keep a certificate-anchored code identity so this grant can persist across updates.
+
 ## The third player returns to the home page
 
 This symptom is not enough to identify one cause. Check the affected row for an account-change or update warning. Confirm the browser is logged in to the intended account and that account is not already playing elsewhere. Wait for preparation to complete; repeated Play clicks can create extra sessions. When ready, close only the affected player and retry from the browser. Preserve the other players.

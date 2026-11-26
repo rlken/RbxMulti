@@ -21,7 +21,7 @@ From the repository root:
 bash build.sh
 ```
 
-The script **replaces the generated `build/` directory**. Do not store personal files there. It compiles arm64 and x86_64 targets with a macOS 13 deployment minimum, combines them with `lipo`, generates the icon, includes the MIT license in the app bundle, ad-hoc signs the bundle, and creates:
+The script **replaces the generated `build/` directory**. Do not store personal files there. It compiles arm64 and x86_64 targets with a macOS 13 deployment minimum, combines them with `lipo`, generates the icon, includes the MIT license in the app bundle, and creates:
 
 - `build/RbxMulti.app`
 - `build/RbxMulti.zip`
@@ -34,7 +34,9 @@ lipo -archs build/RbxMulti.app/Contents/MacOS/RbxMulti
 /usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' build/RbxMulti.app/Contents/Info.plist
 ```
 
-This verifies the local signature structure and output metadata, not notarization, malware absence, account safety, or successful gameplay. No certificate secret is required for normal builds.
+Without a signing identity, local and CI builds are ad-hoc signed. Public website releases use a persistent self-signed code-signing certificate so macOS can match click permissions across versions. Set up that identity once with `scripts/setup-signing-identity.sh`; its private key stays in the login Keychain. `scripts/publish-update.sh` refuses to publish without the stable identity. This signature is not Apple notarization.
+
+This verifies the local signature structure and output metadata, not notarization, malware absence, account safety, or successful gameplay.
 
 Launching the real app claims Roblox URL handlers, sets its App Nap preference, and starts the default keep-awake assertion. Do not open a development copy while relying on the installed copy's link routing. Use isolated test fixtures for lifecycle changes.
 

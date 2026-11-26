@@ -2,6 +2,12 @@
 
 This is a feature history, not a claim that every earlier version had a public GitHub release.
 
+## 1.2.7
+
+- Check the actual macOS event-posting permission used by mouse clicks; stop asking for unrelated Accessibility API access.
+- Keep click permission grants stable across website releases with a persistent certificate-anchored code signature.
+- Explain when reopening RbxMulti is needed after changing permission.
+
 ## 1.2.6
 
 - Show the installed app version in a dedicated Updates view.
