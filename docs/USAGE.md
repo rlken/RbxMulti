@@ -58,7 +58,7 @@ Update archives are validated with an Ed25519 signature embedded in the app. The
 
 ## Auto Clicker
 
-The **Auto Clicker** section clicks at the current pointer position every 0.05–5 seconds in the active app. Place the pointer over the intended target, then use **Start/Stop** or F6; reset the click count as needed. macOS Accessibility approval and synthetic-click access are requested separately; global F6 separately needs Input Monitoring. Start/Stop works without F6. Follow the permission row shown in the app, which identifies the remaining approval.
+The **Auto Clicker** section clicks at the current pointer position every 0.05–5 seconds in the active app. Place the pointer over the intended target, then use **Start/Stop** or F6; reset the click count as needed. Click posting uses macOS event-synthesizing permission; global F6 separately needs Input Monitoring. Start/Stop works without F6. The app opens the relevant Privacy & Security pane if click permission remains unavailable.
 
 ## Updates and removal
 

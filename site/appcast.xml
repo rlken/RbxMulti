@@ -6,6 +6,16 @@
     <description>Signed RbxMulti updates.</description>
     <language>en</language>
     <item>
+      <title>RbxMulti 1.2.10</title>
+      <link>https://rlken.github.io/RbxMulti/#download</link>
+      <sparkle:version>19</sparkle:version>
+      <sparkle:shortVersionString>1.2.10</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <sparkle:releaseNotesLink>https://github.com/rlken/RbxMulti/blob/main/CHANGELOG.md</sparkle:releaseNotesLink>
+      <pubDate>Thu, 26 Nov 2026 12:21:54 +0000</pubDate>
+      <enclosure url="https://rlken.github.io/RbxMulti/downloads/v1.2.10/RbxMulti.zip" length="3155846" type="application/octet-stream" sparkle:edSignature="6lT/pYuqXTvYIIqlw4MFkpqhagVvJMh03p79FDnQlpx38as8QpX5JFmZOTyJb6kAipoDRmMYeU8gChCtO/f3BQ==" />
+    </item>
+    <item>
       <title>RbxMulti 1.2.9</title>
       <link>https://rlken.github.io/RbxMulti/#download</link>
       <sparkle:version>18</sparkle:version>
@@ -58,6 +68,6 @@
   </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: mazvWnSQckbTOi22lJhcFfvOU/2PMum+QhQhHAIfAa8o45l+aLqo34UTEyN0Kz54zjnmrqkCJyUaw/TmpBxlAQ==
-length: 3970
+edSignature: 85WcjqCJWdKo91A2Oi3dQY4R5x1WiWh7ufnEX2CMBdtQYnalegabVahPaKH5+uV7cnUYkty8R4lt84mHmgyvCw==
+length: 4701
 -->

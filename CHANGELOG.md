@@ -2,10 +2,14 @@
 
 This is a feature history, not a claim that every earlier version had a public GitHub release.
 
+## 1.2.10
+
+- Stop gating mouse clicks on Accessibility API trust; check the event-posting permission used by CGEvent.
+- Keep the click permission request focused on that permission and refresh status afterward.
+
 ## 1.2.9
 
-- Separate Accessibility and synthetic-click permission checks and request them one at a time.
-- Show which macOS permission is missing so an enabled Accessibility switch is not mistaken for click-posting approval.
+- Separate Accessibility and synthetic-click permission checks.
 
 ## 1.2.8
 

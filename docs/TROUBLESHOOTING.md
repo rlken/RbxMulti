@@ -14,7 +14,7 @@ The manager intentionally stays hidden when it receives Play links. Lack of a ma
 
 ## Auto Clicker says permission is missing
 
-RbxMulti 1.2.9 shows Accessibility approval and mouse-click posting as separate permissions. Click **Allow** for Accessibility first; once enabled, click **Allow Clicks** to request macOS synthetic-click access. If Settings already shows RbxMulti enabled but **Allow Clicks** remains, macOS may have a saved denial for its separate `PostEvent` permission. Reset just that decision in Terminal with `tccutil reset PostEvent com.rbxmulti.app`, reopen RbxMulti, and click **Allow Clicks** again. Public releases use a stable code identity so approvals can persist across updates.
+RbxMulti 1.2.10 checks the macOS synthetic-click permission directly and does not block clicks on the separate Accessibility API trust status. Click **Allow Clicks** and approve the macOS prompt. If Settings already shows RbxMulti enabled but the app still reports missing access, macOS may have a saved denial for its separate `PostEvent` permission. Reset just that decision in Terminal with `tccutil reset PostEvent com.rbxmulti.app`, reopen RbxMulti, and click **Allow Clicks** again. Public releases use a stable code identity so approvals can persist across updates.
 
 ## The third player returns to the home page
 
