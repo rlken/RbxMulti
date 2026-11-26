@@ -37,15 +37,12 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
-        with:
-          name: RbxMulti
-          path: release
       - uses: softprops/action-gh-release@v2
         with:
           prerelease: ${{ contains(github.ref_name, '-') }}
-          body_path: docs/RELEASE-1.2.2.md
-          files: |
-            release/RbxMulti.zip
-            release/SHA256SUMS.txt
+          body: |
+            Download RbxMulti from the official website:
+
+            https://rlken.github.io/RbxMulti/#download
+
+            The website provides the latest app download, installation steps, compatibility information, and release details.
