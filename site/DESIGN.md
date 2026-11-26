@@ -69,8 +69,9 @@ The supplied RbxMulti icon anchors the page. Large black headlines, quiet neutra
 - Light canvas with sparse ambient particles
 - Large, balanced headlines and readable body copy
 - Blue actions and purple details
-- A floating MacBook frame containing a crop of the owner’s actual RbxMulti window screenshot
-- The MacBook preview drifts gently with a small 3D tilt and respects reduced-motion settings
+- A Studio Display behind a MacBook Pro, each showing the owner’s actual RbxMulti window screenshot
+- Scroll-triggered entrance: the display slides in from the left and the MacBook Pro from the right; neither device floats continuously
+- The two devices enter from opposite sides when the showcase is scrolled into view
 
 ## Colors
 
@@ -111,15 +112,15 @@ Use centered content containers with generous space between sections. The deskto
 
 ## Elevation & Depth
 
-Depth comes from subtle neutral borders and soft, offset shadows under the showcase and release cards. Keep accents flat; reserve hover lift for interactive cards and buttons.
+Depth comes from subtle neutral borders and soft, offset shadows under the device showcase and release cards. Keep accents flat; reserve hover lift for interactive cards and buttons.
 
 ### Shadow Vocabulary
-- **Showcase**: `0 21px 24px rgba(0,0,0,.16)`, paired with a gentle floating tilt.
+- **Showcase**: `0 20px 30px rgba(23,31,43,.14)` with a softer foreground shadow under the laptop.
 - **Release card**: `0 8px 25px rgba(36,47,68,.035)`.
 
 ## Shapes
 
-Cards use softly rounded corners (14–20px), the laptop display uses a 21px frame, and compact actions use full pills. Fine neutral borders separate surfaces without heavy outlines.
+Cards use softly rounded corners (14–20px), the Studio Display and MacBook Pro use rounded aluminum frames, and compact actions use full pills. Fine neutral borders separate surfaces without heavy outlines.
 
 ## Components
 
@@ -132,9 +133,10 @@ Cards use softly rounded corners (14–20px), the laptop display uses a 21px fra
 - **Release cards:** white surfaces with a small icon illustration, release label, version, system requirement, and direct release link.
 - **Archive card:** compact text-led surface with a round external-link action.
 
-### Laptop Showcase
-- **Frame:** a CSS-rendered aluminum laptop shell with a dark inner bezel and a product window sized within the display.
-- **Interface:** use accurate RbxMulti labels and mark the mockup as illustrative. Use the owner-provided app screenshot in the display instead of recreating the interface.
+### Device Showcase
+- **Frame:** CSS-rendered aluminum Studio Display behind a MacBook Pro, with dark bezels and subtle shadows.
+- **Interface:** show the owner-provided RbxMulti app screenshot on both screens; do not recreate the interface.
+- **Motion:** on scroll into view, slide the display in from the left and the MacBook Pro in from the right. Respect reduced-motion settings and do not loop or float after entry.
 
 ### Navigation
 - **Desktop:** compact translucent light header, brand at left, section links and download action at right.

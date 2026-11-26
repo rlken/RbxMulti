@@ -70,35 +70,37 @@ button { font: inherit; }
 .section { position: relative; }
 .section-inner, .download-inner { width: min(1120px, calc(100% - 56px)); margin: 0 auto; }
 .features { padding: clamp(82px, 10vw, 142px) 16px 130px; background: #fff; }
-.feature-intro { max-width: 680px; margin: 0 auto 70px; text-align: center; }
+.feature-layout { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .9fr); align-items: center; gap: clamp(38px, 5.5vw, 76px); }
+.feature-intro { max-width: none; margin: 0; text-align: left; }
 .feature-intro h2, .download-intro h2 { margin: 0; font-size: clamp(36px, 5.1vw, 58px); font-weight: 800; line-height: 1.12; letter-spacing: -.047em; text-wrap: balance; }
 .feature-intro h2 span { color: var(--blue); }
-.feature-intro p, .download-intro p { max-width: 710px; margin: 22px auto 0; color: var(--muted); font-size: 16px; line-height: 1.8; }
-.feature-actions { display: flex; justify-content: center; gap: 26px; margin-top: 24px; }
-.text-button { display: inline-flex; align-items: center; min-height: 28px; padding: 4px 0; color: var(--blue); font-size: 13px; font-weight: 700; text-decoration: none; transition: color 160ms ease; }
-.text-button:hover { color: var(--blue-hover); text-decoration: underline; }
-.muted-button { color: #586171; }
-.muted-button:hover { color: var(--ink); }
+.feature-intro p, .download-intro p { max-width: 710px; margin: 22px 0 0; color: var(--muted); font-size: 16px; line-height: 1.8; }
+.feature-actions { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 12px; margin-top: 27px; }
+.feature-action { display: inline-flex; align-items: center; justify-content: center; gap: 11px; min-height: 54px; padding: 13px 21px; border-radius: 999px; color: #fff; font-size: 14px; font-weight: 700; text-decoration: none; transition: transform 180ms var(--ease), background 160ms ease, box-shadow 180ms ease; }
+.feature-action:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(19,35,61,.16); }
+.feature-action svg { width: 22px; height: 22px; flex: 0 0 auto; }
+.feature-read-more { background: #191c22; }
+.feature-read-more:hover { background: #303640; }
+.feature-help { background: #239bd7; }
+.feature-help:hover { background: #1684bc; }
 
-.macbook-showcase { width: min(100%, 1080px); margin: 0 auto 86px; perspective: 1500px; }
-.macbook { position: relative; padding-bottom: 1px; transform-style: preserve-3d; filter: drop-shadow(0 21px 24px rgba(0,0,0,.16)); }
-.macbook-showcase.is-visible .macbook { animation: laptop-float 8s ease-in-out infinite; will-change: transform; }
-@keyframes laptop-float {
-  0%, 100% { transform: translateY(0) rotateX(3deg) rotateY(-6deg) rotateZ(-.35deg); }
-  50% { transform: translateY(-13px) rotateX(.5deg) rotateY(2deg) rotateZ(.2deg); }
-}
-.macbook-display { position: relative; z-index: 1; width: 94%; margin: 0 auto; padding: 16px; border: 1px solid #59616c; border-bottom-color: #3e454f; border-radius: 21px 21px 9px 9px; background: linear-gradient(135deg,#d7dbe0,#9ba3ad 35%,#e1e4e7 65%,#8e969f); box-shadow: inset 0 1px 0 rgba(255,255,255,.82), inset 0 -2px 3px rgba(28,35,45,.18); }
-.macbook-camera { position: absolute; z-index: 3; top: clamp(11px, 1.5vw, 19px); left: 50%; width: clamp(44px, 7vw, 78px); height: 11px; transform: translateX(-50%); border-radius: 0 0 8px 8px; background: #101216; }
-.macbook-screen { display: grid; grid-template-rows: 36px 1fr; gap: 6px; overflow: hidden; aspect-ratio: 1.6; padding: 8px; border: 1px solid #0f1115; border-radius: 10px 10px 3px 3px; background: #101216; }
-.mac-menu-bar { display: flex; align-items: center; justify-content: space-between; padding: 6px 16px; border-radius: 4px; color: #20242c; background: rgba(250,251,253,.96); font-size: 12px; font-weight: 650; }
-.mac-menu-status { display: inline-flex; align-items: center; gap: 8px; color: #515968; }
-.mac-menu-status i { width: 7px; height: 7px; display: inline-block; border-radius: 50%; background: #818b9a; }
-.mac-menu-status i:first-child { background: #47a879; }
-.mac-menu-status b { margin-left: 2px; font-size: 12px; font-weight: 600; }
-.mac-desktop { min-height: 0; display: grid; place-items: center; padding: 0; border-radius: 4px; background: linear-gradient(130deg,#e4eaf1,#d3dfe8 55%,#e1dfe9); }
-.app-window-image { display: block; width: min(60%, 590px); height: auto; object-fit: contain; border: 1px solid rgba(255,255,255,.16); border-radius: 13px; box-shadow: 0 18px 38px rgba(0,0,0,.32); }
-.macbook-base { position: relative; z-index: 2; width: 100%; height: clamp(20px,2.8vw,31px); margin-top: -1px; clip-path: polygon(0 0,100% 0,96% 74%,89% 100%,11% 100%,4% 74%); border-radius: 0 0 45% 45%; background: linear-gradient(180deg,#c4c8ce 0%,#edf0f3 24%,#aeb4bc 78%,#d4d8dd 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,.95), 0 7px 10px rgba(29,37,49,.18); }
-.macbook-base span { position: absolute; top: 0; left: 50%; width: 16%; height: 5px; transform: translateX(-50%); border: 1px solid rgba(105,112,122,.22); border-radius: 0 0 8px 8px; background: linear-gradient(#b7bcc3,#e5e8eb); }
+.device-showcase { min-width: 0; margin: 0; }
+.device-stage { position: relative; width: 100%; height: clamp(390px, 42vw, 545px); }
+.studio-display { position: absolute; z-index: 1; top: 0; left: 11%; width: 88%; opacity: 0; transform: translateX(-74px); transition: opacity 820ms var(--ease), transform 950ms var(--ease); }
+.studio-frame { padding: 9px; border: 1px solid #6a7078; border-radius: 15px; background: linear-gradient(135deg,#e0e3e7,#aab0b8 35%,#f0f2f4 66%,#9ba2aa); box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 20px 30px rgba(23,31,43,.14); }
+.studio-bezel { padding: 10px; border-radius: 9px; background: #08090c; }
+.studio-screen { display: grid; place-items: center; overflow: hidden; aspect-ratio: 16 / 10; border-radius: 3px; background: linear-gradient(130deg,#e4eaf1,#d3dfe8 55%,#e1dfe9); }
+.studio-app-shot { display: block; width: 62%; height: auto; border-radius: 9px; box-shadow: 0 18px 38px rgba(0,0,0,.3); }
+.studio-stand { width: 20%; height: clamp(43px, 5.2vw, 69px); margin: 0 auto; clip-path: polygon(25% 0,75% 0,100% 100%,0 100%); background: linear-gradient(90deg,#aab0b8,#edf0f3 45%,#9ba2aa); }
+.studio-foot { width: 54%; height: 9px; margin: -1px auto 0; border-radius: 50%; background: linear-gradient(180deg,#e1e4e7,#aeb4bc); box-shadow: 0 8px 14px rgba(24,32,45,.14); }
+.macbook-pro { position: absolute; z-index: 3; bottom: 3%; left: -2%; width: 63%; opacity: 0; transform: translateX(88px); filter: drop-shadow(0 17px 18px rgba(0,0,0,.2)); transition: opacity 850ms 120ms var(--ease), transform 1s 120ms var(--ease); }
+.macbook-pro-frame { padding: 7px; border: 1px solid #777e87; border-radius: 12px 12px 4px 4px; background: linear-gradient(135deg,#d8dce1,#a2a9b2 35%,#eceef0 66%,#949ba4); box-shadow: inset 0 1px 0 rgba(255,255,255,.9); }
+.macbook-pro-screen { position: relative; display: grid; place-items: center; overflow: hidden; aspect-ratio: 1.6; padding: 8px; border-radius: 6px 6px 2px 2px; background: #0c0d11; }
+.macbook-pro-screen::before { position: absolute; top: 0; left: 50%; width: 16%; height: 8px; border-radius: 0 0 7px 7px; background: #050609; content: ""; transform: translateX(-50%); }
+.macbook-pro-app-shot { display: block; width: 61%; height: auto; border-radius: 6px; box-shadow: 0 12px 26px rgba(0,0,0,.32); }
+.macbook-pro-base { position: relative; height: clamp(12px, 1.6vw, 18px); margin-top: -1px; clip-path: polygon(0 0,100% 0,94% 83%,88% 100%,12% 100%,6% 83%); border-radius: 0 0 40% 40%; background: linear-gradient(180deg,#e3e6e9 0%,#b0b6be 62%,#e5e7e9 100%); }
+.macbook-pro-base span { position: absolute; top: 1px; left: 50%; width: 19%; height: 4px; transform: translateX(-50%); border: 1px solid rgba(105,112,122,.18); border-radius: 0 0 6px 6px; background: linear-gradient(#b7bcc3,#e5e8eb); }
+.device-showcase.is-visible .studio-display, .device-showcase.is-visible .macbook-pro { opacity: 1; transform: translateX(0); }
 .showcase-caption { display: block; padding-top: 13px; color: #515b69; font-size: 12px; text-align: center; }
 
 .feature-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(22px, 5vw, 64px); max-width: 1010px; margin: 0 auto; padding-top: 20px; }
@@ -160,9 +162,13 @@ button { font: inherit; }
   .hero-title { font-size: clamp(42px, 10vw, 68px); }
   .section-inner, .download-inner, .footer-inner { width: calc(100% - 36px); }
   .features { padding-top: 83px; padding-bottom: 90px; }
-  .feature-intro { margin-bottom: 48px; }
+  .feature-layout { grid-template-columns: 1fr; gap: 32px; }
+  .feature-intro { order: -1; text-align: center; }
   .feature-intro p { font-size: 14px; }
-  .macbook-showcase { margin-bottom: 64px; }
+  .feature-actions { justify-content: center; }
+  .device-stage { height: clamp(300px, 73vw, 430px); }
+  .studio-display { left: 8%; width: 89%; }
+  .macbook-pro { left: 0; width: 63%; }
   .feature-strip { grid-template-columns: 1fr; gap: 20px; max-width: 460px; }
   .feature-strip article { display: block; padding-top: 17px; }
   .feature-strip h3 { font-size: 15px; }
@@ -181,6 +187,12 @@ button { font: inherit; }
   .hero-title { font-size: clamp(39px, 11.3vw, 50px); }
   .hero-copy { font-size: 14px; }
   .section-inner, .download-inner, .footer-inner { width: calc(100% - 30px); }
+  .device-stage { height: clamp(280px, 82vw, 355px); }
+  .studio-display { left: 7%; width: 91%; }
+  .studio-frame { padding: 6px; }
+  .studio-bezel { padding: 6px; }
+  .macbook-pro { bottom: 4%; width: 65%; }
+  .feature-action { min-height: 50px; padding-inline: 17px; font-size: 13px; }
   .footer-main { align-items: flex-start; flex-direction: column; gap: 23px; }
   .footer-links { gap: 18px; }
   .footer-bottom { align-items: center; }
@@ -196,5 +208,6 @@ button { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .reveal { opacity: 1; transform: none; filter: none; }
+  .studio-display, .macbook-pro { opacity: 1; transform: none; }
   #ambient-canvas { display: none; }
 }
