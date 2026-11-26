@@ -134,7 +134,7 @@ Cards use softly rounded corners (14–20px), the Studio Display and MacBook Pro
 
 ### Device Showcase
 - **Frame:** layered device images cropped from the owner-provided reference, with the Studio Display behind a notched MacBook Pro. Keep the MacBook's slim silver base visible without drawing a keyboard.
-- **Interface:** show the owner-provided RbxMulti app screenshot on both screens; do not recreate the interface.
+- **Interface:** show the owner-provided RbxMulti app screenshot on both screens; do not recreate the interface. The MacBook screen uses the owner's supplied space-station wallpaper crop, with a simple camera notch and no media controls.
 - **Motion:** when a section enters the viewport, reveal it; reset it after it leaves so the entrance replays on the next scroll into view. The Studio Display slides from the left and MacBook Pro from the right. Respect reduced-motion settings; no continuous looping or floating.
 
 ### Navigation
