@@ -14,6 +14,8 @@ final class AutoClicker: ObservableObject {
     @Published var interval: Double = 1.0        // seconds between clicks
     @Published var clickCount = 0
     @Published var status = "Ready"
+    @Published var hasAccessibilityPermission = AXIsProcessTrusted()
+    @Published var hasPostEventPermission = CGPreflightPostEventAccess()
     @Published var hasClickPermission = AXIsProcessTrusted() && CGPreflightPostEventAccess()
     @Published var hasInputMonitoring = CGPreflightListenEventAccess()
 
@@ -37,11 +39,25 @@ final class AutoClicker: ObservableObject {
 
     // MARK: Permissions
 
-    /// Click posting requires Accessibility trust and macOS event-posting authorization.
+    /// Request permissions in sequence so macOS doesn't stack two approval prompts.
     func requestClickPermission() {
-        let key = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String
-        _ = AXIsProcessTrustedWithOptions([key: true] as CFDictionary)
+        refreshPermissions()
+        if !hasAccessibilityPermission {
+            let key = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String
+            _ = AXIsProcessTrustedWithOptions([key: true] as CFDictionary)
+            openAccessibilitySettingsIfNeeded()
+            return
+        }
+        guard !hasPostEventPermission else { return }
         _ = CGRequestPostEventAccess()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+            guard let self else { return }
+            self.refreshPermissions()
+            self.openAccessibilitySettingsIfNeeded()
+        }
+    }
+
+    private func openAccessibilitySettingsIfNeeded() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
             guard let self else { return }
             self.refreshPermissions()
@@ -64,7 +80,9 @@ final class AutoClicker: ObservableObject {
     }
 
     func refreshPermissions() {
-        hasClickPermission = AXIsProcessTrusted() && CGPreflightPostEventAccess()
+        hasAccessibilityPermission = AXIsProcessTrusted()
+        hasPostEventPermission = CGPreflightPostEventAccess()
+        hasClickPermission = hasAccessibilityPermission && hasPostEventPermission
         let wasListening = hasInputMonitoring
         hasInputMonitoring = CGPreflightListenEventAccess()
         if hasInputMonitoring && !wasListening { installHotkey() }
@@ -171,9 +189,13 @@ struct AutoClickerView: View {
                     .lineLimit(1)
             }
 
-            if !clicker.hasClickPermission {
-                permissionRow("Accessibility access is needed to post clicks.", button: "Allow", action: clicker.requestClickPermission)
-                Text("Enable RbxMulti in Privacy & Security → Accessibility. Reopen the app if needed.")
+            if !clicker.hasAccessibilityPermission {
+                permissionRow("Accessibility approval is needed before clicks can be sent.", button: "Allow", action: clicker.requestClickPermission)
+                Text("Enable RbxMulti in Privacy & Security → Accessibility, then return here.")
+                    .font(.system(size: 11)).foregroundStyle(LauncherStyle.secondaryText)
+            } else if !clicker.hasPostEventPermission {
+                permissionRow("macOS has not approved RbxMulti to send mouse clicks.", button: "Allow Clicks", action: clicker.requestClickPermission)
+                Text("If the macOS prompt opens Settings, approve RbxMulti there, then reopen the app.")
                     .font(.system(size: 11)).foregroundStyle(LauncherStyle.secondaryText)
             }
             if !clicker.hasInputMonitoring {

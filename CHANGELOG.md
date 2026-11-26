@@ -2,6 +2,11 @@
 
 This is a feature history, not a claim that every earlier version had a public GitHub release.
 
+## 1.2.9
+
+- Separate Accessibility and synthetic-click permission checks and request them one at a time.
+- Show which macOS permission is missing so an enabled Accessibility switch is not mistaken for click-posting approval.
+
 ## 1.2.8
 
 - Restore the Accessibility trust request and check required by macOS click posting.
