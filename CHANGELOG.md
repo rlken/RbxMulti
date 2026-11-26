@@ -2,6 +2,12 @@
 
 This is a feature history, not a claim that every earlier version had a public GitHub release.
 
+## 1.2.6
+
+- Show the installed app version in a dedicated Updates view.
+- Add an in-app update check that opens Sparkle’s install flow when an update is available.
+- Keep automatic update checks and signed background updates enabled.
+
 ## 1.2.5
 
 - Check for new versions automatically and silently install verified updates.

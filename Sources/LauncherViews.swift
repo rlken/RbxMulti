@@ -114,6 +114,7 @@ struct AccountRow: View {
 struct ContentView: View {
     @ObservedObject var model: Model
     var hide: () -> Void
+    var checkForUpdates: () -> Void = {}
     @StateObject private var clicker = AutoClicker()
     @State private var page = 0
     @State private var showGuide = false
@@ -132,8 +133,10 @@ struct ContentView: View {
                         if !model.items.isEmpty { accounts }
                     } else if page == 1 {
                         activity
-                    } else {
+                    } else if page == 2 {
                         AutoClickerView(clicker: clicker)
+                    } else {
+                        updates
                     }
                 }
                 .padding(LauncherStyle.inset)
@@ -173,7 +176,8 @@ struct ContentView: View {
                     Text("Accounts").tag(0)
                     Text("Activity").tag(1)
                     Text("Auto Clicker").tag(2)
-                }.pickerStyle(.segmented).labelsHidden().frame(width: 320)
+                    Text("Updates").tag(3)
+                }.pickerStyle(.segmented).labelsHidden().frame(width: 400)
                 Spacer()
                 Label(model.handlerOK ? "Play links ready" : "Link setup needed",
                       systemImage: model.handlerOK ? "link" : "exclamationmark.triangle")
@@ -234,6 +238,33 @@ struct ContentView: View {
                 }
             }
         }.frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private var updates: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Software Update").font(.system(size: 17, weight: .semibold))
+            HStack(spacing: 12) {
+                Image(nsImage: NSImage(named: NSImage.applicationIconName) ?? NSImage())
+                    .resizable().frame(width: 44, height: 44).accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("RbxMulti").font(.system(size: 15, weight: .semibold))
+                    Text("Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown")")
+                        .font(.system(size: 13)).foregroundStyle(LauncherStyle.secondaryText)
+                }
+                Spacer()
+                Button(action: checkForUpdates) {
+                    Label("Check for Updates…", systemImage: "arrow.clockwise")
+                }
+                .buttonStyle(.borderedProminent)
+            }
+            Text("RbxMulti checks automatically in the background. Check now to open the macOS update flow; if an update is available, Sparkle will show its version and an Install Update option.")
+                .font(.system(size: 13)).foregroundStyle(LauncherStyle.secondaryText)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(20)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(LauncherStyle.surface, in: RoundedRectangle(cornerRadius: 14))
+        .overlay(RoundedRectangle(cornerRadius: 14).stroke(LauncherStyle.separator, lineWidth: 0.5))
     }
 
     private var footer: some View {

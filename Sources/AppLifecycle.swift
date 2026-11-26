@@ -122,7 +122,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func showAccounts() {
         presentation.openExplicitly()
         if controller == nil {
-            controller = LauncherWindow(content: AnyView(ContentView(model: model, hide: { [weak self] in self?.hideAccounts() })))
+            controller = LauncherWindow(content: AnyView(ContentView(
+                model: model,
+                hide: { [weak self] in self?.hideAccounts() },
+                checkForUpdates: { [weak self] in self?.checkForUpdates() }
+            )))
         }
         controller?.present()
     }

@@ -1,6 +1,6 @@
 # Automatic updates
 
-Version 1.2.5 is the first build with Sparkle. Users on older versions install this one once from the website; it then checks periodically and silently installs signed updates. **RbxMulti → Check for Updates…** starts an immediate check.
+Version 1.2.5 is the first build with Sparkle. Users on older versions install it once from the website. RbxMulti then checks periodically and silently installs signed updates. The app’s **Updates** section shows the installed version and starts a manual check; Sparkle presents its native **Install Update** action when a newer version is available. **RbxMulti → Check for Updates…** is also available from the app menu.
 
 The updater uses Sparkle 2.10.0 from its official release archive, pinned by SHA-256 in `build.sh`. Its Ed25519 private signing key is kept in the maintainer's login Keychain. Only the public key is embedded in `Info.plist`; signed ZIP archives are published on GitHub Pages through `site/appcast.xml`.
 

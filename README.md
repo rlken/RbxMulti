@@ -60,7 +60,7 @@ See [troubleshooting](docs/TROUBLESHOOTING.md) for errors 276/278, missing avata
 
 ## Update or uninstall
 
-RbxMulti checks for updates in the background and silently installs signed updates. Updates begin after installing version 1.2.5 from the website; earlier versions need this one-time manual update. Choose **Check for Updates…** from the RbxMulti menu to check immediately. The appcast and update archive are hosted on the project website; update archives are verified with a private-key signature before installation. Running Roblox players are not replaced by an RbxMulti update.
+RbxMulti checks for updates in the background and silently installs signed updates. Updates begin after installing version 1.2.5 from the website; earlier versions need this one-time manual update. Open the **Updates** section in the app to see the installed version and check manually; Sparkle offers an **Install Update** action when a newer version is available. You can also use **Check for Updates…** from the RbxMulti menu. Update archives are verified before installation, and running Roblox players are not replaced by an RbxMulti update.
 
 To stop using RbxMulti, select the gear menu → **Restore Roblox links…**, then quit the manager. You can then move its app to Trash. See [cleanup instructions](docs/PRIVACY.md#local-data-and-cleanup) before removing player caches or settings.
 

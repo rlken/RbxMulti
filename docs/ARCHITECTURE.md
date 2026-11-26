@@ -41,7 +41,7 @@ Names and headshots use public Roblox APIs. Process lifetime, game connection st
 - Do not log protocol URLs or obtain browser cookies/passwords.
 - Do not claim that signature checks demonstrate Keychain continuity.
 - Keep process status distinct from in-game connectivity.
-- The optional clicker posts ordinary mouse clicks at the current pointer location in the active app. It does not inject game code. No account vault or automatic updater is implemented.
+- The optional clicker posts ordinary mouse clicks at the current pointer location in the active app. It does not inject game code. Signed Sparkle updates use the appcast and public key configured in `Info.plist`.
 - Opening/hiding/quitting the manager must not implicitly terminate players. Explicit confirmed Close controls are destructive and currently force termination.
 
 Local code preparation tests cannot establish Roblox compatibility or long-running rejoin correctness. Those need separate, consented live tests.
