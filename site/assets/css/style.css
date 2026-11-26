@@ -81,8 +81,8 @@ button { font: inherit; }
 .feature-action svg { width: 22px; height: 22px; flex: 0 0 auto; }
 .feature-read-more { background: #191c22; }
 .feature-read-more:hover { background: #303640; }
-.feature-help { background: #239bd7; }
-.feature-help:hover { background: #1684bc; }
+.feature-help { background: #147aa9; }
+.feature-help:hover { background: #0e5c86; }
 
 .device-showcase { min-width: 0; margin: 0; }
 .device-stage { position: relative; width: 100%; height: clamp(390px, 42vw, 545px); }
