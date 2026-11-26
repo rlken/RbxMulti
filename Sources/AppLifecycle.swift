@@ -1,5 +1,6 @@
 import AppKit
 import SwiftUI
+import Sparkle
 
 /// URL delivery is work, not a request to show the manager.
 struct WindowPresentation {
@@ -46,6 +47,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var pending: [URL] = []
     private var presentation = WindowPresentation()
     private var controller: LauncherWindow?
+    private var updaterController: SPUStandardUpdaterController?
     private var statusItem: NSStatusItem?
     private let countItem = NSMenuItem(title: "No players running", action: nil, keyEquivalent: "")
 
@@ -57,6 +59,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        updaterController = SPUStandardUpdaterController(
+            startingUpdater: true,
+            updaterDelegate: nil,
+            userDriverDelegate: nil
+        )
         installMenuBar()
         if managesServices { model.claimLinks() }
         // No automatic SwiftUI Window scene: cold URL launches stay windowless.
@@ -80,6 +87,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menu.addItem(.separator())
         for (title, action, key) in [("Show accounts", #selector(showAccounts), ""),
                                      ("Hide window", #selector(hideAccounts), ""),
+                                     ("Check for Updates…", #selector(checkForUpdates), ""),
                                      ("Quit RbxMulti", #selector(quit), "q")] {
             let entry = NSMenuItem(title: title, action: action, keyEquivalent: key)
             entry.target = self
@@ -91,6 +99,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let main = NSMenu()
         let appMenu = NSMenuItem()
         let appSubmenu = NSMenu()
+        appSubmenu.addItem(withTitle: "Check for Updates…", action: #selector(checkForUpdates), keyEquivalent: "").target = self
         appSubmenu.addItem(withTitle: "Quit RbxMulti", action: #selector(quit), keyEquivalent: "q").target = self
         appMenu.submenu = appSubmenu
         main.addItem(appMenu)
@@ -118,6 +127,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         controller?.present()
     }
     @objc func hideAccounts() { presentation.hide(); controller?.conceal() }
+    @objc private func checkForUpdates() { updaterController?.checkForUpdates(nil) }
     @objc private func quit() { NSApp.terminate(nil) }
 
     func application(_ application: NSApplication, open urls: [URL]) {

@@ -2,6 +2,12 @@
 
 This is a feature history, not a claim that every earlier version had a public GitHub release.
 
+## 1.2.5
+
+- Check for new versions automatically and silently install verified updates.
+- Add a manual **Check for Updates…** command in the app menu.
+- Verify update archives with a Sparkle Ed25519 signature before extraction.
+
 ## 1.2.4
 
 - Remove the Roblox foreground-app check from the optional Auto Clicker.

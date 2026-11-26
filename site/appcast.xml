@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+  <channel>
+    <title>RbxMulti Updates</title>
+    <link>https://rlken.github.io/RbxMulti/</link>
+    <description>Signed RbxMulti updates.</description>
+    <language>en</language>
+    <item>
+      <title>RbxMulti 1.2.5</title>
+      <link>https://rlken.github.io/RbxMulti/#download</link>
+      <sparkle:version>14</sparkle:version>
+      <sparkle:shortVersionString>1.2.5</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <sparkle:releaseNotesLink>https://github.com/rlken/RbxMulti/blob/main/CHANGELOG.md</sparkle:releaseNotesLink>
+      <pubDate>Thu, 26 Nov 2026 10:29:28 +0000</pubDate>
+      <enclosure url="https://rlken.github.io/RbxMulti/downloads/v1.2.5/RbxMulti.zip" length="3115787" type="application/octet-stream" sparkle:edSignature="u+2Iqn50YkXp8dfu9rinF69Uto3BXXZWa6Ye7ztG4wzkLT+KaFdu58954suBEeWHBSILX7dWByfJZrY1AU+IDg==" />
+    </item>
+  </channel>
+</rss>
+<!-- sparkle-signatures:
+edSignature: YIgo89qKoCG1WbX3Gd178UZ8votOM5k2b1G/8iwEQ8zkNeYhqcC+gTDc6aWQb2ZhK8Ds91L5MZ10+75kQpwoDw==
+length: 1058
+-->

@@ -40,6 +40,12 @@ The launcher is macOS-only. The universal binary supports Apple silicon and Inte
 
 Use the gear menu's **Notify when a player closes** option to request macOS notifications when a tracked Roblox process exits. This detects a closed player app only; it cannot detect an in-game disconnect or rejoin prompt while the process remains open. Reopening a player is always a manual browser Play action.
 
+## Automatic updates
+
+RbxMulti checks the signed website feed in the background and silently installs verified updates. It checks periodically (Sparkle's default interval is 24 hours). Use **RbxMulti → Check for Updates…** for an immediate check. Automatic updates are available starting in version 1.2.5; older versions must be manually replaced with this bootstrap version once. Updates replace only RbxMulti, not running Roblox players.
+
+Update archives are validated with an Ed25519 signature embedded in the app. The private signing key stays in the maintainer's macOS Keychain and is not published with the website or source.
+
 ## Background operation and sleep
 
 - Hide, Command-H, or the red close button keeps the manager in the menu bar. No Dock icon is expected.

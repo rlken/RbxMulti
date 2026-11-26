@@ -11,7 +11,7 @@ cd RbxMulti
 swiftc --version
 ```
 
-Complete any Apple installation/terms prompts yourself. The native app uses system frameworks and command-line tools; no CocoaPods, Swift Package Manager packages, or npm dependencies are required to build it. The source is available under the [MIT License](../LICENSE). The companion website in `site/` uses HTML, Tailwind CSS from its CDN, custom CSS and JavaScript, and Google Fonts.
+Complete any Apple installation/terms prompts yourself. The native app uses system frameworks and command-line tools; the build downloads the pinned Sparkle 2.10.0 binary framework and verifies its SHA-256 before linking it. The source is available under the [MIT License](../LICENSE). Sparkle's license is included in the built app. The companion website in `site/` uses HTML, Tailwind CSS from its CDN, custom CSS and JavaScript, and Google Fonts.
 
 ## Build
 

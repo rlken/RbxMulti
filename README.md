@@ -2,9 +2,9 @@
 
 Run multiple Roblox accounts on one Mac with a native menu-bar launcher.
 
-**Version 1.2.4 · macOS 13+ · Apple silicon and Intel**
+**Version 1.2.5 · macOS 13+ · Apple silicon and Intel**
 
-**[Download 1.2.4 from the website](https://rlken.github.io/RbxMulti/#download)** — adds an optional interval clicker for accessibility and app testing. It clicks at the pointer position in the active app. Browser Play continues to use separate player instances. See the [user guide](docs/USAGE.md#auto-clicker).
+**[Download 1.2.5 from the website](https://rlken.github.io/RbxMulti/#download)** — adds automatic, signature-verified app updates. It also includes an optional interval clicker for accessibility and app testing. Browser Play continues to use separate player instances. See the [user guide](docs/USAGE.md#auto-clicker).
 
 **First launch:** macOS may ask RbxMulti for Accessibility and Input Monitoring access if you enable the Auto Clicker. Grant only the permissions you want to use; the Start/Stop button works without the global F6 shortcut permission.
 
@@ -60,7 +60,7 @@ See [troubleshooting](docs/TROUBLESHOOTING.md) for errors 276/278, missing avata
 
 ## Update or uninstall
 
-There is **no automatic updater**. Quit the manager, replace the app in Applications with the new download, and reopen it. Running players need their own relaunch to pick up isolation changes.
+RbxMulti checks for updates in the background and silently installs signed updates. Updates begin after installing version 1.2.5 from the website; earlier versions need this one-time manual update. Choose **Check for Updates…** from the RbxMulti menu to check immediately. The appcast and update archive are hosted on the project website; update archives are verified with a private-key signature before installation. Running Roblox players are not replaced by an RbxMulti update.
 
 To stop using RbxMulti, select the gear menu → **Restore Roblox links…**, then quit the manager. You can then move its app to Trash. See [cleanup instructions](docs/PRIVACY.md#local-data-and-cleanup) before removing player caches or settings.
 
@@ -69,6 +69,7 @@ To stop using RbxMulti, select the gear menu → **Restore Roblox links…**, th
 - [User guide](docs/USAGE.md): controls, status labels, checksums, and background behavior
 - [Privacy](docs/PRIVACY.md): network requests, local storage, and permissions
 - [Build and test](docs/DEVELOPMENT.md) · [Architecture](docs/ARCHITECTURE.md) · [Changelog](CHANGELOG.md)
+- [Automatic updates](docs/UPDATES.md)
 - [Contributing](CONTRIBUTING.md) · [Signing research](docs/SIGNING-RESEARCH.md)
 - [Website source](site/index.html)
 

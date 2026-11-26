@@ -1,6 +1,6 @@
 # Privacy, permissions, and local changes
 
-This describes RbxMulti 1.2.4, not Roblox's own data practices or a guarantee about future builds.
+This describes RbxMulti 1.2.5, not Roblox's own data practices or a guarantee about future builds.
 
 ## Data flow
 
@@ -21,6 +21,7 @@ This describes RbxMulti 1.2.4, not Roblox's own data practices or a guarantee ab
 | `source.plist` beside each private app | Source metadata and signature-mode fingerprint used to decide whether to rebuild. |
 | `com.rbxmulti.app` preferences | Keep-awake choice and native window settings. |
 | macOS notification permission | Optional permission requested when you enable player-close alerts in the gear menu. Alerts are generated locally when a tracked Roblox process exits. |
+| Update check | Sparkle periodically requests the signed appcast and update archive from the official GitHub Pages site. Update archives are verified against an Ed25519 public key embedded in the app. |
 | `com.roblox.RobloxPlayer` preference `NSAppSleepDisabled` | Set to true when the manager starts; intended to reduce App Nap interference. This does not prove game timers run reliably. |
 | `roblox:` and `roblox-player:` default handlers | Set to RbxMulti on manager launch or Enable; restored through the gear menu. |
 | A `caffeinate` child process | Prevents idle display/system sleep while enabled and tied to the manager's PID. |
