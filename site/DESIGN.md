@@ -134,7 +134,7 @@ Cards use softly rounded corners (14–20px), the Studio Display and MacBook Pro
 - **Archive card:** compact text-led surface with a round external-link action.
 
 ### Device Showcase
-- **Frame:** CSS-rendered aluminum Studio Display behind a MacBook Pro, with dark bezels and subtle shadows.
+- **Frame:** CSS-rendered aluminum Studio Display behind a full MacBook Pro model, including the black screen notch, keyboard deck, and centered trackpad.
 - **Interface:** show the owner-provided RbxMulti app screenshot on both screens; do not recreate the interface.
 - **Motion:** on scroll into view, slide the display in from the left and the MacBook Pro in from the right. Respect reduced-motion settings and do not loop or float after entry.
 
