@@ -1,5 +1,6 @@
 import SwiftUI
 import AppKit
+import UserNotifications
 
 let robloxID = "com.roblox.RobloxPlayer"
 let schemes = ["roblox-player", "roblox"]
@@ -56,6 +57,23 @@ final class Model: ObservableObject {
             updateWakeLock()
         }
     }
+    @Published var playerCloseAlerts = false {
+        didSet {
+            guard servicesEnabled else { return }
+            UserDefaults.standard.set(playerCloseAlerts, forKey: "playerCloseAlerts")
+            guard playerCloseAlerts else { return }
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, error in
+                DispatchQueue.main.async {
+                    if let error {
+                        self.message = "Could not enable player close alerts: \(error.localizedDescription)"
+                    } else if !granted {
+                        self.playerCloseAlerts = false
+                        self.message = "Allow notifications for RbxMulti in System Settings to receive player close alerts."
+                    }
+                }
+            }
+        }
+    }
     private var counter = 0
     private var caffeinate: Process?
     private var lastIdentityScan: Date = .distantPast
@@ -69,6 +87,7 @@ final class Model: ObservableObject {
         servicesEnabled = startServices
         guard startServices else { return }
         keepMacAwake = UserDefaults.standard.object(forKey: "keepMacAwake") as? Bool ?? true
+        playerCloseAlerts = UserDefaults.standard.bool(forKey: "playerCloseAlerts")
         // Request App Nap opt-out for future player launches.
         UserDefaults(suiteName: robloxID)?.set(true, forKey: "NSAppSleepDisabled")
         updateWakeLock()
@@ -112,6 +131,24 @@ final class Model: ObservableObject {
         f.dateFormat = "HH:mm:ss"
         log.append("\(f.string(from: Date()))  \(s)")
         if log.count > 30 { log.removeFirst(log.count - 30) }
+    }
+
+    private func notifyPlayerClosed(_ name: String, pid: pid_t) {
+        guard playerCloseAlerts else { return }
+        let center = UNUserNotificationCenter.current()
+        center.getNotificationSettings { settings in
+            guard settings.authorizationStatus == .authorized else { return }
+            let content = UNMutableNotificationContent()
+            content.title = "Roblox player closed"
+            content.body = "\(name) ended. Open roblox.com and press Play to start it again."
+            content.sound = .default
+            let request = UNNotificationRequest(
+                identifier: "player-closed-\(pid)-\(UUID().uuidString)",
+                content: content,
+                trigger: nil
+            )
+            center.add(request)
+        }
     }
 
     func robloxURL() -> URL? {
@@ -325,6 +362,7 @@ final class Model: ObservableObject {
             if items[i].running && !now {
                 items[i].stoppedAt = Date()
                 note("\(items[i].name) (process \(items[i].pid)) stopped")
+                notifyPlayerClosed(items[i].name, pid: items[i].pid)
             }
             items[i].running = now
         }

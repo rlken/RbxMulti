@@ -68,6 +68,12 @@ struct AccountRow: View {
                 Button("Show") { NSRunningApplication(processIdentifier: item.pid)?.activate(options: [.activateIgnoringOtherApps]) }
                     .controlSize(.regular).help("Bring \(item.name)'s Roblox window forward")
                     .accessibilityLabel("Show \(item.name)'s Roblox window")
+            } else {
+                Button("Play again") {
+                    NSWorkspace.shared.open(URL(string: "https://www.roblox.com")!)
+                }
+                .controlSize(.small)
+                .help("Open Roblox in your browser; choose the account and press Play")
             }
             Menu {
                 Button("Edit account name…") { draft = item.name; editing = true }
@@ -108,6 +114,7 @@ struct AccountRow: View {
 struct ContentView: View {
     @ObservedObject var model: Model
     var hide: () -> Void
+    @StateObject private var clicker = AutoClicker()
     @State private var page = 0
     @State private var showGuide = false
     @State private var confirmCloseAll = false
@@ -123,7 +130,11 @@ struct ContentView: View {
                     if page == 0 {
                         if showGuide || model.items.isEmpty { guide }
                         if !model.items.isEmpty { accounts }
-                    } else { activity }
+                    } else if page == 1 {
+                        activity
+                    } else {
+                        AutoClickerView(clicker: clicker)
+                    }
                 }
                 .padding(LauncherStyle.inset)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -161,7 +172,8 @@ struct ContentView: View {
                 Picker("View", selection: $page) {
                     Text("Accounts").tag(0)
                     Text("Activity").tag(1)
-                }.pickerStyle(.segmented).labelsHidden().frame(width: 210)
+                    Text("Auto Clicker").tag(2)
+                }.pickerStyle(.segmented).labelsHidden().frame(width: 320)
                 Spacer()
                 Label(model.handlerOK ? "Play links ready" : "Link setup needed",
                       systemImage: model.handlerOK ? "link" : "exclamationmark.triangle")
@@ -236,6 +248,8 @@ struct ContentView: View {
                 Spacer()
                 Toggle("Keep Mac awake", isOn: $model.keepMacAwake).labelsHidden().toggleStyle(.switch).controlSize(.small)
                 Menu {
+                    Toggle("Notify when a player closes", isOn: $model.playerCloseAlerts)
+                    Divider()
                     Button("Clear closed players") { model.items.removeAll { !$0.running } }
                         .disabled(!model.items.contains { !$0.running })
                     Button("Restore Roblox links…") { confirmRestore = true }

@@ -2,6 +2,14 @@
 
 This is a feature history, not a claim that every earlier version had a public GitHub release.
 
+## 1.2.3
+
+- Add an optional interval-based Auto Clicker for general accessibility and app testing, with Start/Stop, F6, interval control, and click count.
+- Block clicker startup when Roblox is frontmost and stop it if Roblox comes forward.
+- Request macOS Accessibility approval for click posting and Input Monitoring approval for global F6.
+- Add optional notifications when a tracked Roblox player process exits and a manual Play again action.
+- Document clicker permissions, local behavior, and its Roblox foreground guard.
+
 ## 1.2.1
 
 - Add a small footer button linking to the maintainer's GitHub profile.

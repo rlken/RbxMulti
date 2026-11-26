@@ -31,11 +31,14 @@ The launcher is macOS-only. The universal binary supports Apple silicon and Inte
 | Roblox updated · relaunch needed | An update changed the private copy's identifier. Relaunch that account when ready to restore isolation. |
 | Player closed | The process ended. Its row clears after approximately 90 seconds. |
 | Show | Brings that player's window forward. |
+| Play again | Opens roblox.com so you can choose the account and press Play yourself. |
 | Edit account name… | Looks up an entered public username and avatar when automatic identification is missing. Labels are not saved account configurations. |
 | Close player… / Close all players… | Force-closes the selected processes after confirmation. Unfinished game progress can be lost. |
 | Clear closed players | Removes stopped-process rows immediately, but not disconnected players whose processes are still running. |
 
 **Activity** shows the last 30 manager events, not a full Roblox log. Account names and avatars depend on player logs and public Roblox APIs. A manual username is a fallback, not proof of which account is logged in.
+
+Use the gear menu's **Notify when a player closes** option to request macOS notifications when a tracked Roblox process exits. This detects a closed player app only; it cannot detect an in-game disconnect or rejoin prompt while the process remains open. Reopening a player is always a manual browser Play action.
 
 ## Background operation and sleep
 
@@ -46,6 +49,12 @@ The launcher is macOS-only. The universal binary supports Apple silicon and Inte
 - The small GitHub button in the footer opens [rlken's profile](https://github.com/rlken) in your default browser.
 
 **Keep Mac awake** defaults to on and is saved between launches. It prevents idle display/system sleep through `caffeinate`. It does not send game input, reset Roblox's idle timer, or guarantee operation with a closed lid, after manual sleep, or through a network interruption. Expect higher battery and power use.
+
+## Auto Clicker
+
+The **Auto Clicker** section is a general-purpose tool for accessibility and app testing. It clicks at the current pointer position every 0.05–5 seconds; use **Start/Stop** or F6, and reset the click count as needed. It will not start while Roblox is the frontmost app and stops if Roblox comes forward. It is not for automating Roblox play.
+
+Click posting requires macOS Accessibility permission. The global F6 shortcut also needs Input Monitoring permission; both can be requested from the on-screen prompts. Replacing or rebuilding the ad-hoc-signed app may require granting those permissions again. If F6 is not enabled, the Start/Stop button still works.
 
 ## Updates and removal
 

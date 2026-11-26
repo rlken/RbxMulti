@@ -2,11 +2,11 @@
 
 Run multiple Roblox accounts on one Mac with a native menu-bar launcher.
 
-**Version 1.2.2 · macOS 13+ · Apple silicon and Intel**
+**Version 1.2.3 · macOS 13+ · Apple silicon and Intel**
 
-**[Download 1.2.2 from the website](https://rlken.github.io/RbxMulti/#download)** — browser Play now preserves Roblox’s official signature and uses separate cookie directories. See [what changed](docs/RELEASE-1.2.2.md).
+**[Download 1.2.3 from the website](https://rlken.github.io/RbxMulti/#download)** — adds an optional clicker for general accessibility and app testing, with a Roblox frontmost-app guard. Browser Play continues to use separate player instances. See the [user guide](docs/USAGE.md#auto-clicker).
 
-**First launch:** If macOS shows the expected Roblox Studio-sharing Keychain request, enter your login Keychain password only in that system dialog and select **Always Allow**. The maintainer confirmed that approval persists across launches and automatic rejoining works.
+**First launch:** macOS may ask RbxMulti for Accessibility and Input Monitoring access if you enable the Auto Clicker. Grant only the permissions you want to use; the Start/Stop button works without the global F6 shortcut permission.
 
 [Download](https://rlken.github.io/RbxMulti/#download) · [User guide](docs/USAGE.md) · [Troubleshooting](docs/TROUBLESHOOTING.md) · [Report a bug](https://github.com/rlken/RbxMulti/issues/new/choose)
 
@@ -17,6 +17,8 @@ Run multiple Roblox accounts on one Mac with a native menu-bar launcher.
 - Show or close individual players and view recent launch activity.
 - Keep the manager in the menu bar without opening its window on every Play click.
 - Optionally keep your Mac awake while the manager runs.
+- Use the optional Auto Clicker for general accessibility and app testing; it stops when Roblox comes to the front.
+- Optionally receive a macOS notification when a tracked Roblox player process closes.
 
 ## Install
 
@@ -47,7 +49,7 @@ To reopen the manager, use its stacked-windows menu-bar icon → **Show accounts
 
 ## Important limitations
 
-- **No anti-idle automation.** Rejoining is handled by the game; RbxMulti does not simulate input or run an automatic rejoin timer.
+- **No Roblox automation.** The optional Auto Clicker is blocked while Roblox is the frontmost app and stops if Roblox comes forward. It is for other apps, accessibility, and app testing only.
 - **Keychain prompts may repeat**, including after “Always Allow.” The experimental signing option is not a fix and is disabled by default.
 - **Player running means the process exists**, not that it is connected to a game. A disconnected player remains listed until its process closes.
 - **Roblox updates can reset session isolation.** Relaunch an affected player when the manager warns you.

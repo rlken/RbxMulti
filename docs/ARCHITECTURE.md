@@ -10,7 +10,8 @@ RbxMulti is a native SwiftUI/AppKit application, not a port of a Windows mutex u
 | --- | --- |
 | `Sources/AppLifecycle.swift` | AppKit entry point, menu-bar item, explicit window lifecycle, queued URL handling. |
 | `Sources/LauncherViews.swift` | Accounts, avatars, warnings, Activity, confirmations, and guidance. |
-| `Sources/RbxMulti.swift` | Process discovery, launch orchestration, identity/profile requests, URL handlers, wake assertion. |
+| `Sources/AutoClicker.swift` | Optional interval-based clicker, F6 shortcut, permission checks, and Roblox frontmost guard. |
+| `Sources/RbxMulti.swift` | Process discovery, launch orchestration, identity/profile requests, URL handlers, wake assertion, and optional process-exit notifications. |
 | `Sources/IsolatedPlayer.swift` | Occupancy checks, source selection, per-slot copies, signing, cache verification. |
 | `Sources/PlayerSessionLog.swift` | PID-to-open-log association and initial/latest join user-ID parsing. |
 | `Info.plist` | Version, URL schemes, minimum macOS version, menu-bar application flag. |
@@ -30,6 +31,8 @@ Normal signing is ad-hoc. The optional certificate configuration is explicitly o
 
 The model refreshes process state every two seconds and requests identity inspection at intervals longer than five seconds. `lsof` associates a PID with its open `_Player_*_last.log`; timestamps alone are not used to assign identities. Join entries supply the first and latest user IDs. A difference triggers a warning.
 
+When enabled, macOS notifications are sent only when a tracked Roblox process exits. This does not detect an in-game disconnect or automate a rejoin; the user returns through Roblox's browser Play button.
+
 Names and headshots use public Roblox APIs. Process lifetime, game connection state, and account identity are different signals: the first does not prove the other two. New PIDs are discovered independently. Closed rows expire after approximately 90 seconds; there is no general proof that a replacement PID belongs to a prior row.
 
 ## Safety boundaries and non-goals
@@ -38,7 +41,7 @@ Names and headshots use public Roblox APIs. Process lifetime, game connection st
 - Do not log protocol URLs or obtain browser cookies/passwords.
 - Do not claim that signature checks demonstrate Keychain continuity.
 - Keep process status distinct from in-game connectivity.
-- No input simulation, game-code injection, 19-minute timer, reconnect-button automation, account vault, or automatic updater is implemented.
+- The optional clicker is blocked whenever Roblox is frontmost and stops when Roblox comes forward. No game-code injection, AFK/reconnect automation, account vault, or automatic updater is implemented.
 - Opening/hiding/quitting the manager must not implicitly terminate players. Explicit confirmed Close controls are destructive and currently force termination.
 
 Local code preparation tests cannot establish Roblox compatibility or long-running rejoin correctness. Those need separate, consented live tests.

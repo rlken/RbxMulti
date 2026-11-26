@@ -98,7 +98,7 @@ button { font: inherit; }
 .device-showcase.is-visible .studio-display, .device-showcase.is-visible .macbook-pro { opacity: 1; transform: translateX(0); }
 .showcase-caption { display: block; padding-top: 13px; color: #515b69; font-size: 12px; text-align: center; }
 
-.feature-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(22px, 5vw, 64px); max-width: 1010px; margin: 0 auto; padding-top: 20px; }
+.feature-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(22px, 4vw, 48px); max-width: 1120px; margin: 0 auto; padding-top: 20px; }
 .feature-strip article { padding-top: 20px; border-top: 1px solid var(--line); }
 .feature-strip h3 { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -.02em; }
 .feature-strip p { margin: 9px 0 0; color: var(--muted); font-size: 13px; line-height: 1.7; }

@@ -1,6 +1,6 @@
 # Privacy, permissions, and local changes
 
-This describes the code in version 1.2.1, not Roblox's own data practices or a guarantee about future builds.
+This describes RbxMulti 1.2.3, not Roblox's own data practices or a guarantee about future builds.
 
 ## Data flow
 
@@ -9,7 +9,8 @@ This describes the code in version 1.2.1, not Roblox's own data practices or a g
 - It requests public profile names from `users.roblox.com` and headshot URLs from `thumbnails.roblox.com`, then loads the returned image. Manual username lookup sends the entered username to Roblox. These network services receive normal connection metadata, including the originating IP address.
 - The source contains no analytics/crash-reporting backend for RbxMulti. Roblox and the browser have their own network behavior, outside this utility's control.
 - Clicking the footer's GitHub button opens the maintainer's public profile in your default browser. The app does not contact GitHub automatically.
-- Account names, detected IDs, avatar URLs, and the last 30 Activity events are held in memory. Keep Mac awake and native window placement are persisted in preferences. The launcher is not a password manager.
+- Account names, detected IDs, avatar URLs, and the last 30 Activity events are held in memory. Keep Mac awake, player-close alert preference, and native window placement are persisted in preferences. If enabled, macOS notifications report that a tracked Roblox process closed; the app does not monitor game connection state. The launcher is not a password manager.
+- The optional Auto Clicker posts a left click at the current pointer location on the selected interval and listens only for F6 as its global shortcut. It does not record keystrokes or store click locations/counts. macOS Accessibility permission is needed to post clicks; Input Monitoring is needed for F6 outside RbxMulti. The built-in frontmost Roblox guard blocks clicking in Roblox.
 
 ## Changes made during normal use
 
@@ -19,6 +20,7 @@ This describes the code in version 1.2.1, not Roblox's own data practices or a g
 | `~/Library/Application Support/RbxMulti/Players/slotN/Roblox.app` | Cached private player app copy. Slots are reused when idle. |
 | `source.plist` beside each private app | Source metadata and signature-mode fingerprint used to decide whether to rebuild. |
 | `com.rbxmulti.app` preferences | Keep-awake choice and native window settings. |
+| macOS notification permission | Optional permission requested when you enable player-close alerts in the gear menu. Alerts are generated locally when a tracked Roblox process exits. |
 | `com.roblox.RobloxPlayer` preference `NSAppSleepDisabled` | Set to true when the manager starts; intended to reduce App Nap interference. This does not prove game timers run reliably. |
 | `roblox:` and `roblox-player:` default handlers | Set to RbxMulti on manager launch or Enable; restored through the gear menu. |
 | A `caffeinate` child process | Prevents idle display/system sleep while enabled and tied to the manager's PID. |
